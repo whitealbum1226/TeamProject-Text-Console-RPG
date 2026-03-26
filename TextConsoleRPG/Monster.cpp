@@ -1,77 +1,83 @@
-// Monster.cpp
+ï»¿// Monster.cpp
 
 #include "Monster.h"
-#include "Player.h"
 #include <cstdlib>
 #include <ctime>
 
-Monster::Monster(std::string name, int playerLevel)
-	: name_(name)
+// ëª¬ìŠ¤í„° ìƒì„±ì
+Monster::Monster(const std::string name, int playerLevel)
+    : name_(name), hp_(0), attack_(0), defense_(0)
 {
-	static bool rendInitialized = false;
-	if (!rendInitialized)
-	{
-		srand(static_cast<unsigned int>(time(nullptr)));
-		rendInitialized = true;
-	}
+    static bool randInitialized = false;
+    if (!randInitialized) // rand ì´ˆê¸°í™”
+    {
+        srand(static_cast<unsigned int>(time(nullptr)));
+        randInitialized = true;
+    }
+    // í”Œë ˆì´ì–´ ë ˆë²¨ ê°’ì— ë”°ë¥¸ ëœë¤ ìŠ¤í…Ÿ
+    int minHp = playerLevel * 20;
+    int maxHp = playerLevel * 30;
+    hp_ = rand() % (maxHp - minHp + 1) + minHp;
 
-	int minHp = playerLevel * 20;
-	int maxHp = playerLevel * 30;
-	hp_ = rand() % (maxHp - minHp + 1) + minHp;
+    int minAtk = playerLevel * 5;
+    int maxAtk = playerLevel * 10;
+    attack_ = rand() % (maxAtk - minAtk + 1) + minAtk;
 
-	int minAtk = playerLevel * 5;
-	int maxAtk = playerLevel * 10;
-	attack_ = rand() % (maxAtk - minAtk + 1) + minAtk;
-
-	defense_ = playerLevel * 3;
+    defense_ = playerLevel * 3;
 }
 
-std::string Monster::GetName()
+std::string Monster::GetName() const
 {
-	return name_;
+    return name_;
 }
-int Monster::GetHP()
+int Monster::GetHP() const
 {
-	return hp_;
+    return hp_;
 }
-int Monster::GetAttack()
+int Monster::GetAttack() const
 {
-	return attack_;
+    return attack_;
 }
-int Monster::GetDefense()
+int Monster::GetDefense() const
 {
-	return defense_;
+    return defense_;
 }
 
 void Monster::SetName(std::string name)
 {
-	this->name_ = name;
+    this->name_ = name;
 }
 void Monster::SetHP(int hp)
 {
-	this->hp_ = hp;
+    this->hp_ = hp;
 }
 void Monster::SetAttack(int attack)
 {
-	this->attack_ = attack;
+    this->attack_ = attack;
 }
 void Monster::SetDefense(int defense)
 {
-	this->defense_ = defense;
-}
-void TakeDamage(Player& player)// ¸ó½ºÅÍ°¡ µ¥¹ÌÁö¸¦ ÀÔÀ» ¶§
-{
-	// ÇØ´ç ÁÖ¼®Àº ÇÃ·¹ÀÌ¾î ¿Ï¼º ÈÄ Á¶Á¤ÇÏ°í Áö¿ì¸é »ç¿ë °¡´É
-	//int takeDamage = player->GetAttack() - this->GetDefense()
-	//if (takeDamage <= 0)
-	//{ takeDamage = 1; }
-	//this->SetHP(this->GetHP() - takeDamage)
+    this->defense_ = defense;
 }
 
-void PlayerAttack(Player& player) // ¸ó½ºÅÍ°¡ µ¥¹ÌÁö¸¦ ÀÔÈú ¶§
+// ëª¬ìŠ¤í„°ê°€ ë°ë¯¸ì§€ë¥¼ ì…ì„ ë•Œ í•¨ìˆ˜ ì²˜ë¦¬
+void Monster::TakeDamage(int takeDamage)
 {
-	//int damage = this->GetAttack() - player->GetDefense()
-	//if (damage == 0)
-	//{ damage = 1; }
-	//player->SetHP(player->GetHP() - damage)
+    if (takeDamage <= 0)
+    {
+        takeDamage = 1;
+    }
+
+    hp_ -= takeDamage;
+
+    if (hp_ < 0)
+    {
+        hp_ = 0;
+    }
+}
+
+// ëª¬ìŠ¤í„°ê°€ HP 0ì¸ì§€ í™•ì¸í•˜ê³  ì‚¬ë§ ì—¬ë¶€ true/false ë¥¼ ë°˜í™˜
+bool Monster::IsDead() const
+{
+    return hp_ == 0;
 }
