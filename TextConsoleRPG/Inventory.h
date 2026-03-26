@@ -15,30 +15,19 @@ public:
 class Item
 {
 public:
-
-	std::string name;
-
-public:
-
-	Item(const std::string& name) : name(name) {};
+    std::string name;
+    Item(const std::string& name) : name(name) {};
 	virtual ~Item() {};
 };
-
-
 
 // 포션 사용시 효과들을 정리해놓은 클래스. 아직 전투시스템 구현 안돼 구체적인 구현 불가능.
 class UsePotion
 {
 protected:
-
 public:
-
-	virtual void ApplyEffect(Player& player) = 0;
+    virtual void ApplyEffect(Player& player) = 0;
     virtual ~UsePotion() {};
-
 };
-
-
 
 //빨간 포션 클래스 정의.
 class RedPotion : public Item, public UsePotion
@@ -60,10 +49,8 @@ public:
 			std::cout << "남은 포션이 없습니다." << std::endl;
 		}
 	}
-
 private:
-
-	size_t count = 10;
+    size_t count = 10;
 };
 
 // 파란 포션 클래스 정의.
@@ -79,7 +66,6 @@ public:
 			std::cout << "파란 포션을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
 			player.Mp += 50;
             std::cout << "Mp가 50 회복되었습니다. 현재 Mp:" << player.Mp << std::endl;
-			
 		}
 		else
 		{
@@ -88,8 +74,7 @@ public:
 	}
 
 private:
-
-	size_t count = 10;
+    size_t count = 10;
 };
 
 class AttackPotion : public Item, public UsePotion
@@ -142,7 +127,6 @@ class Inventory
 {
 
 public:
-
     Item* items[40];
     size_t itemcount = 0;
 
