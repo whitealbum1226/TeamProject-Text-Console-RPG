@@ -36,8 +36,7 @@ public:
     RedPotion() : Item("빨간 포션") {}
 	void ApplyEffect(Player& player) override
 	{
-      
-        if (count > 0)
+      if (count > 0)
 		{
             count--;
 			std::cout << "빨간포션을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
@@ -125,7 +124,6 @@ public:
 //인벤토리 클래스 정의.
 class Inventory
 {
-
 public:
     Item* items[40];
     size_t itemcount = 0;
@@ -138,6 +136,5 @@ public:
         }
     }
     void AddItem() {}// 이건 나중에 전투에서 몬스터를 죽이면 아이템을 주웠을 때 실행 예정. 아직 미구현.
-
 };
 
