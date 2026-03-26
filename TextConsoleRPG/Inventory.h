@@ -27,6 +27,7 @@ public:
 	virtual void ApplyEffect() = 0;
 	virtual ~UsePotion();
 	virtual void IncreaseHp() = 0;
+	virtual ~UsePotion();
 
 };
 
@@ -51,7 +52,7 @@ public:
 
 private:
 
-	int count = 10;
+	size_t count = 10;
 };
 
 // 파란 포션 클래스 정의.
@@ -77,7 +78,7 @@ public:
 
 private:
 
-	int count = 10;
+	size_t count = 10;
 };
 
 //인벤토리 클래스 정의.
@@ -90,7 +91,7 @@ public:
 	~Inventory() {};
 
 	// 아이템 추가. 여긴 전투시스템 구현돼야 더 구체적인 구현 가능. 아니면 나중에도 아예 안쓸수도.
-	void AddItem(Item* newItem)
+	void AddItem(Item* 
 	{
 
 	}
