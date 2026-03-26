@@ -6,7 +6,7 @@
 class Monster
 {
 public:
-    Monster(const std::string name, int playerLevel);
+    Monster(const std::string& name, int playerLevel);
 
     virtual ~Monster() {};
     virtual void TakeDamage(int takeDamage);

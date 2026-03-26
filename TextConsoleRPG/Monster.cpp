@@ -5,7 +5,7 @@
 #include <ctime>
 
 // 몬스터 생성자
-Monster::Monster(const std::string name, int playerLevel)
+Monster::Monster(const std::string& name, int playerLevel)
     : name_(name), hp_(0), attack_(0), defense_(0)
 {
     static bool randInitialized = false;
