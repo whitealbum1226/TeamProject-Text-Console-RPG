@@ -3,6 +3,8 @@
 #include "Monster/Monster.h"
 #include "Monster/Slime.h"
 #include "Monster/Goblin.h"
+#include "Skill.h"
+#include "Slash.h"
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -17,11 +19,80 @@ void BattleSystem::BattleReady()
     }
 }
 
+void BattleSystem::NextTurn()
+{
+    int choice;
+    while (true)
+    {
+        std::cout << "\n1. 공격 / 2. 인벤토리 / 3. 스킬 / " << std::endl;
+        std::cout << "선택: ";
+        std::cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            return;
+        case 2:
+            // 인벤토리 화면
+            continue;
+        case 3:
+        {
+            auto& skills = player->getSkillList();
+
+            if (skills.empty()) //배운 스킬이 없을 경우
+            {
+                std::cout << "배운 스킬이 없습니다!" << std::endl;
+                continue;
+            }
+            std::cout << "\n[ 스킬 목록 ]" << std::endl;
+            for (int i = 0; i < (int)skills.size(); ++i)
+            {
+                std::cout << i + 1 << ". " << skills[i]->getName() << " (MP: " << skills[i]->getMpConsume() << ")" << std::endl;
+            }
+
+            std::cout << "0. 취소\n번호 선택: ";
+
+            int subSelect;
+            std::cin >> subSelect;
+
+            if (subSelect == 0) continue; // 선택 창으로 돌아감
+            if (subSelect < 1 || subSelect >(int)skills.size())
+            {
+                std::cout << "잘못된 번호입니다." << std::endl;
+                continue;
+            }
+
+            if (!skills[subSelect - 1]->useSkill(*player, *monster))
+            {
+                // 마나 부족 등으로 사용 실패 시 다시 메뉴로
+                continue;
+            }
+
+            return;
+        default:
+            std::cout << "잘못된 입력입니다." << std::endl;
+            continue;
+
+        }
+        }
+    }
+}
+
 void BattleSystem::PlayerWin()
 {
     int ShopSelect;
+    int GoldRandom = (rand() % 11) + 20; // 20~30 골드 랜덤
 
+<<<<<<< HEAD
     player->gainExp(50); // 경험치 50 증가
+=======
+    player->gainExp(50);
+    player->gainGold(GoldRandom);
+    player->Levelup();
+
+    std::cout << "\n축하합니다! 전투에서 승리했습니다." << std::endl;
+    std::cout << "얻은 경험치: 50 | 얻은 골드: " << GoldRandom << std::endl;
+>>>>>>> main
     std::cout << "상점에 진입 하시겠습니까. (예.1)";
     std::cin >> ShopSelect;
 
@@ -35,7 +106,6 @@ void BattleSystem::PlayerWin()
         }
 
 }
-
 
 void BattleSystem::PlayerAttack()
 {

@@ -2,13 +2,13 @@
 
 #include "Player.h"
 <<<<<<< HEAD
-#include <iostream>
-=======
 #include "Skill.h"
 #include "Slash.h"
 #include <iostream>
 #include <vector>
->>>>>>> main
+=======
+#include <iostream>
+>>>>>>> develop
 
 // 플레이어 생성자 설정
 // 플레이어 생성자 설정
@@ -26,6 +26,36 @@ Player::Player(const std::string& name)
     exp_(0),      // 현재 Exp
     gold_(100) {} //현재 골드
 <<<<<<< HEAD
+
+std::string Player::GetName() const {return name_;}
+std::string Player::GetJob() const { return job_; }
+int Player::GetLevel() const{return level_;}
+int Player::GetHP() const { return hp_;}
+int Player::GetAttack() const {return attack_;}
+int Player::GetDefense() const { return def_; }
+int Player::GetExp() const {return exp_;}
+int Player::GetMaxLevel() const { return maxLevel_; }
+int Player::GetMaxHP() const { return maxHp_; }
+int Player::GetMaxMP() const { return maxMp_; }
+int Player::GetMaxExp() const { return maxExp_; }
+int Player::GetMP() const { return mp_; }
+int Player::GetGold() const { return gold_; }
+
+void Player::SetName(std::string name) {name_ = name;}
+void Player::SetJob(std::string job) {job_ = job;}
+void Player::SetLevel(int level) {level_ = level;}
+void Player::SetHP(int hp) {hp_ = hp;}
+void Player::SetAttack(int attack) {attack_ = attack;}
+void Player::SetDefense(int def) {def_ = def; }
+void Player::gainGold(int G) { gold_ += G; } //골드 얻을때
+void Player::gainExp(int exp) {exp_ += exp; } //경험치 얻을때
+
+
+void Player::Heal(int hp) { //hp가 채워질때 (포션을 먹거나, 특별한 이벤트 등등..)
+    hp_ += hp;
+    if (hp_ >= maxHp_) {
+        hp_ = maxHp_;
+=======
 
 std::string Player::GetName() const { return name_; }
 std::string Player::GetJob() const { return job_; }
@@ -128,37 +158,7 @@ void Player::TakeDamage(int takeDamage)
     if (hp_ < 0)
     {
         hp_ = 0;
-=======
-
-std::string Player::GetName() const {return name_;}
-std::string Player::GetJob() const { return job_; }
-int Player::GetLevel() const{return level_;}
-int Player::GetHP() const { return hp_;}
-int Player::GetAttack() const {return attack_;}
-int Player::GetDefense() const { return def_; }
-int Player::GetExp() const {return exp_;}
-int Player::GetMaxLevel() const { return maxLevel_; }
-int Player::GetMaxHP() const { return maxHp_; }
-int Player::GetMaxMP() const { return maxMp_; }
-int Player::GetMaxExp() const { return maxExp_; }
-int Player::GetMP() const { return mp_; }
-int Player::GetGold() const { return gold_; }
-
-void Player::SetName(std::string name) {name_ = name;}
-void Player::SetJob(std::string job) {job_ = job;}
-void Player::SetLevel(int level) {level_ = level;}
-void Player::SetHP(int hp) {hp_ = hp;}
-void Player::SetAttack(int attack) {attack_ = attack;}
-void Player::SetDefense(int def) {def_ = def; }
-void Player::gainGold(int G) { gold_ += G; } //골드 얻을때
-void Player::gainExp(int exp) {exp_ += exp; } //경험치 얻을때
-
-
-void Player::Heal(int hp) { //hp가 채워질때 (포션을 먹거나, 특별한 이벤트 등등..)
-    hp_ += hp;
-    if (hp_ >= maxHp_) {
-        hp_ = maxHp_;
->>>>>>> main
+>>>>>>> develop
     }
 }
 

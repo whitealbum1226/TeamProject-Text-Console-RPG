@@ -28,6 +28,15 @@
     <Filter Include="Monster\Types\Source">
       <UniqueIdentifier>{051ee14d-6d42-426d-af32-a0f00becbf22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{b735ce31-2bf8-4942-aef3-c0b6b06bd74a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\Base">
+      <UniqueIdentifier>{b9240131-1048-4d22-8232-5eec992c23a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\type">
+      <UniqueIdentifier>{ddf096ed-d8db-4bcb-bdc1-023694fe7132}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -60,6 +69,12 @@
     <ClCompile Include="Monster\Monster.cpp">
       <Filter>Monster\Base</Filter>
     </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Skill\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Slash.cpp">
+      <Filter>Skill\type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -91,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="Monster\Troll.h">
       <Filter>Monster\Types\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Skill\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Slash.h">
+      <Filter>Skill\type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
