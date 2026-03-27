@@ -6,7 +6,7 @@
 
 // 몬스터 생성자
 Monster::Monster(const std::string& name, int playerLevel)
-    : name_(name), hp_(0), attack_(0), defense_(0)
+    : name_(name), hp_(0), maxHp_(0), attack_(0), defense_(0)
 {
     static bool randInitialized = false;
     if (!randInitialized) // rand 초기화
@@ -15,14 +15,20 @@ Monster::Monster(const std::string& name, int playerLevel)
         randInitialized = true;
     }
     // 플레이어 레벨 값에 따른 랜덤 스텟
+    // Hp 와 MaxHp
     int minHp = playerLevel * 20;
-    int maxHp = playerLevel * 30;
-    hp_ = rand() % (maxHp - minHp + 1) + minHp;
+    int maxHpValue = playerLevel * 30;
 
+    hp_ = rand() % (maxHpValue - minHp + 1) + minHp;
+    maxHp_ = hp_;
+
+    // Attack
     int minAtk = playerLevel * 5;
     int maxAtk = playerLevel * 10;
+
     attack_ = rand() % (maxAtk - minAtk + 1) + minAtk;
 
+    // Defense
     defense_ = playerLevel * 3;
 }
 
@@ -33,6 +39,10 @@ std::string Monster::GetName() const
 int Monster::GetHP() const
 {
     return hp_;
+}
+int Monster::GetMaxHP() const
+{
+    return maxHp_;
 }
 int Monster::GetAttack() const
 {
