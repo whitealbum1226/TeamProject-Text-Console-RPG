@@ -28,8 +28,6 @@ public:
     void SetDefence(int def);
     void SetAttack(int attack);
     void gainExp(int exp);
-    bool IsDead() const;
-    void TakeDamage(int damage);
     void Levelup();
     
 private:

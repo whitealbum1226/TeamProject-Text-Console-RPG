@@ -40,17 +40,8 @@ void Player::SetDefence(int def) {def_ = def; }
 
 void Player::gainExp(int exp) { this->exp_ += exp; } //경험치 얻기
 
-void Player::TakeDamage(int damage) { // 데미지를 받았을때
-    hp_ -= damage;
-    if (hp_ < 0) hp_ = 0;
-}
-
-bool Player::IsDead() const { // 죽었을 경우
-    return hp_ <= 0;
-}
-
 void Player::Levelup() { // 레벨업
-    while (exp_ >= maxExp_) { // 남은 경험치가 다음 최대 경험치를 또 넘으면 또 레벨업 반복
+    while (exp_ >= maxExp_) { // 남은 경험치가 다음 최대 경험치를 넘으면 레벨업 반복
         if (level_ >= maxLevel_) {
             std::cout << "레벨이 최대입니다!" << std::endl;
             exp_ = 0;
