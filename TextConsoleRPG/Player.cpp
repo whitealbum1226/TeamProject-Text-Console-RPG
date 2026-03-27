@@ -3,6 +3,7 @@
 #include "Player.h"
 #include <iostream>
 
+
 // 플레이어 생성자 설정
 Player::Player(const std::string& name)
     : name_(name), job_("용사"),
@@ -62,4 +63,13 @@ void Player::Levelup() { // 레벨업
     }
 }
 
-
+void Player::PrintStatus() {
+    std::cout << "이름: " << name_ << std::endl;
+    std::cout << "직업: " << job_ << std::endl;
+    std::cout << "레벨: " << level_ << " / 최대 레벨: " << maxLevel_ << std::endl;
+    std::cout << "HP: " << hp_ << " / 최대 HP: " << maxHp_ << std::endl;
+    std::cout << "MP: " << mp_ << " / 최대 MP: " << maxMp_ << std::endl;
+    std::cout << "공격력: " << attack_ << std::endl;
+    std::cout << "방어력: " << def_ << std::endl;
+    std::cout << "EXP: " << exp_ << " / 최대 EXP: " << maxExp_ << std::endl;
+}

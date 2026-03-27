@@ -2,6 +2,7 @@
 
 #pragma once
 #include <string>
+#pragma once
 
 class Player
 {
@@ -29,7 +30,8 @@ public:
     void SetAttack(int attack);
     void gainExp(int exp);
     void Levelup();
-    
+    void PrintStatus();
+
 private:
     std::string name_;
     std::string job_;
