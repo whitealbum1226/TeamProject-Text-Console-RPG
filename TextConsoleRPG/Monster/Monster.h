@@ -23,7 +23,7 @@ public:
     void SetAttack(int attack);
     void SetDefense(int defense);
 
-private:
+protected:
     std::string name_;
     int hp_;
     int maxHp_;
