@@ -45,9 +45,6 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Monster\Monster.cpp">
-      <Filter>Monster\Types\Header</Filter>
-    </ClCompile>
     <ClCompile Include="Monster\Orc.cpp">
       <Filter>Monster\Types\Source</Filter>
     </ClCompile>
@@ -59,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="Monster\Goblin.cpp">
       <Filter>Monster\Types\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\Monster.cpp">
+      <Filter>Monster\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -78,19 +78,19 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Monster\Monster.h">
+      <Filter>Monster\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Goblin.h">
+      <Filter>Monster\Types\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Orc.h">
+      <Filter>Monster\Types\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Slime.h">
       <Filter>Monster\Types\Header</Filter>
     </ClInclude>
     <ClInclude Include="Monster\Troll.h">
-      <Filter>Monster\Types\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster\Orc.h">
-      <Filter>Monster\Types\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster\Slime.h">
-      <Filter>Monster\Types\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster\Goblin.h">
-      <Filter>Monster\Types\Source</Filter>
+      <Filter>Monster\Types\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
