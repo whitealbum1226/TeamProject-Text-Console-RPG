@@ -17,5 +17,7 @@ public:
 
     void BattleReady();
 
+    void PlayerWin();
+
     void BattleStart();
 };
