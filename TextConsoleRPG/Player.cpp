@@ -24,7 +24,7 @@ std::string Player::GetJob() const { return job_; }
 int Player::GetLevel() const{return level_;}
 int Player::GetHP() const { return hp_;}
 int Player::GetAttack() const {return attack_;}
-int Player::GetDeffence() const { return def_; }
+int Player::GetDefense() const { return def_; }
 int Player::GetExp() const {return exp_;}
 int Player::GetMaxLevel() const { return maxLevel_; }
 int Player::GetMaxHP() const { return maxHp_; }
@@ -37,7 +37,7 @@ void Player::SetJob(std::string job) {this->job_ = job;}
 void Player::SetLevel(int level) {this->level_ = level;}
 void Player::SetHP(int hp) {this->hp_ = hp;}
 void Player::SetAttack(int attack) {this->attack_ = attack;}
-void Player::SetDefence(int def) {def_ = def; }
+void Player::SetDefense(int def) {def_ = def; }
 
 void Player::loseGold(int G) {
     gold_ -= G;

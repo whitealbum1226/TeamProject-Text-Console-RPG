@@ -14,7 +14,7 @@ public:
     int GetLevel() const;
     int GetHP() const;
     int GetAttack() const;
-    int GetDeffence() const;
+    int GetDefense() const;
     int GetExp() const;
     int GetMaxExp() const;
     int GetMaxLevel() const;
@@ -27,7 +27,7 @@ public:
     void SetJob(std::string job);
     void SetLevel(int level);
     void SetHP(int hp);
-    void SetDefence(int def);
+    void SetDefense(int def);
     void SetAttack(int attack);
     void gainExp(int exp);
     void Levelup();
