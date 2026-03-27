@@ -42,11 +42,16 @@ void Player::SetDefense(int def) {def_ = def; }
 void Player::gainGold(int G) { gold_ += G; } //골드 얻을때
 void Player::gainExp(int exp) {exp_ += exp; } //경험치 얻을때
 
-void Player::Heal(int hp) { //hp가 채워질때 (포션을 먹거나, 특별한 이벤트 등등..)
+void Player::Heal(int hp) { // HP 채울때 (포션을 먹거나, 특별한 이벤트 등등..)
     hp_ += hp;
     if (hp_ >= maxHp_) {
         hp_ = maxHp_;
     }
+}
+
+void Player::RecoverMP(int amount) { //MP 채울때 
+    mp_ += amount;
+    if (mp_ > maxMp_) mp_ = maxMp_;
 }
 
 void Player::UseMp(int mp) { //마나를 사용할때
@@ -63,6 +68,10 @@ void Player::loseGold(int G) {
     if (gold_ <= G) {
         gold_ = 0;
     }
+}
+
+bool Player::IsAlive() const { //살았는지 판단, 살았으면 True
+    return hp_ > 0;
 }
 
 void Player::Levelup() { // 레벨업

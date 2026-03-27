@@ -34,8 +34,12 @@ public:
     void loseGold(int G);
     void Heal(int hp);
     void UseMp(int mp);
+    void RecoverMP(int amount);
+
     void Levelup();
     void PrintStatus();
+    
+    bool IsAlive() const;
 
 private:
     std::string name_;
