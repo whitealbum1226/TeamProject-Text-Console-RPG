@@ -21,7 +21,7 @@ public:
     int GetMaxHP() const;
     int GetMaxMP() const;
     int GetMP() const;
-    
+    int GetGold() const;
 
     void SetName(std::string name);
     void SetJob(std::string job);
@@ -30,10 +30,12 @@ public:
     void SetDefense(int def);
     void SetAttack(int attack);
     void gainExp(int exp);
-    void Levelup();
-    void PrintStatus();
     void gainGold(int G);
     void loseGold(int G);
+    void Heal(int hp);
+    void UseMp(int mp);
+    void Levelup();
+    void PrintStatus();
 
 private:
     std::string name_;

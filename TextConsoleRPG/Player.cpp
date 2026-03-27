@@ -31,13 +31,32 @@ int Player::GetMaxHP() const { return maxHp_; }
 int Player::GetMaxMP() const { return maxMp_; }
 int Player::GetMaxExp() const { return maxExp_; }
 int Player::GetMP() const { return mp_; }
+int Player::GetGold() const { return gold_; }
 
-void Player::SetName(std::string name) {this->name_ = name;}
-void Player::SetJob(std::string job) {this->job_ = job;}
-void Player::SetLevel(int level) {this->level_ = level;}
-void Player::SetHP(int hp) {this->hp_ = hp;}
-void Player::SetAttack(int attack) {this->attack_ = attack;}
+void Player::SetName(std::string name) {name_ = name;}
+void Player::SetJob(std::string job) {job_ = job;}
+void Player::SetLevel(int level) {level_ = level;}
+void Player::SetHP(int hp) {hp_ = hp;}
+void Player::SetAttack(int attack) {attack_ = attack;}
 void Player::SetDefense(int def) {def_ = def; }
+void Player::gainGold(int G) { gold_ += G; } //골드 얻을때
+void Player::gainExp(int exp) {exp_ += exp; } //경험치 얻을때
+
+void Player::Heal(int hp) { //hp가 채워질때 (포션을 먹거나, 특별한 이벤트 등등..)
+    hp_ += hp;
+    if (hp_ >= maxHp_) {
+        hp_ = maxHp_;
+    }
+}
+
+void Player::UseMp(int mp) { //마나를 사용할때
+    mp_ -= mp;
+    if (mp_ < 0)
+    {
+        std::cout << "마나가 부족합니다!" << std::endl;
+        mp_ += mp;
+    }
+}
 
 void Player::loseGold(int G) {
     gold_ -= G;
@@ -45,12 +64,6 @@ void Player::loseGold(int G) {
         gold_ = 0;
     }
 }
-
-void Player::gainGold(int G) {
-    gold_ += G;
-}
-
-void Player::gainExp(int exp) { this->exp_ += exp; } //경험치 얻기
 
 void Player::Levelup() { // 레벨업
     while (exp_ >= maxExp_) { // 남은 경험치가 다음 최대 경험치를 넘으면 레벨업 반복
