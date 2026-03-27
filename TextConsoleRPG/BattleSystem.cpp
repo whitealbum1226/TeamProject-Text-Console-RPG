@@ -21,7 +21,7 @@ void BattleSystem::PlayerWin()
 {
     int ShopSelect;
 
-    player->SetExp(player->GetExp() + 50); // 경험치 50 증가
+    player->gainExp(50); // 경험치 50 증가
     std::cout << "상점에 진입 하시겠습니까. (예.1)";
     std::cin >> ShopSelect;
 
