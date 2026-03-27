@@ -21,6 +21,7 @@ public:
     int GetMaxHP() const;
     int GetMaxMP() const;
     int GetMP() const;
+    
 
     void SetName(std::string name);
     void SetJob(std::string job);
@@ -31,6 +32,8 @@ public:
     void gainExp(int exp);
     void Levelup();
     void PrintStatus();
+    void gainGold(int G);
+    void loseGold(int G);
 
 private:
     std::string name_;
@@ -45,4 +48,5 @@ private:
     int exp_;
     int maxExp_;
     int def_;
+    int gold_;
 };
