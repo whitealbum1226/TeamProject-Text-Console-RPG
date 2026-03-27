@@ -9,14 +9,14 @@ void ApplyEffect(Player& player) override
     {
         count--;
         std::cout << "빨간포션을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
-        player.Hp += 50;
-        std::cout << "Hp가 50 회복되었습니다. 현재 Hp:" << player.Hp << std::endl;
+        player.hp_ += 50;
+        std::cout << "Hp가 50 회복되었습니다. 현재 Hp:" << player.hp_ << std::endl;
     }
     else
     {
         std::cout << "남은 포션이 없습니다." << std::endl;
     }
-};
+}
 
 BluePotion() : Item("파란 포션") {}
 void ApplyEffect(Player& player) override
@@ -25,14 +25,14 @@ void ApplyEffect(Player& player) override
     {
         count--;
         std::cout << "파란 포션을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
-        player.Mp += 50;
-        std::cout << "Mp가 50 회복되었습니다. 현재 Mp:" << player.Mp << std::endl;
+        player.mp_ += 50;
+        std::cout << "Mp가 50 회복되었습니다. 현재 Mp:" << player.mp_ << std::endl;
     }
     else
     {
         std::cout << "남은 포션이 없습니다." << std::endl;
     }
-};
+}
 
 AttackPotion() : Item("공격의 영약") {}
 void ApplyEffect(Player& player) override
@@ -49,7 +49,7 @@ void ApplyEffect(Player& player) override
         std::cout << "남은 공격의 영약이 없습니다." << std::endl;
     }
 
-};
+}
 
 DefensePotion() : Item("방어의 영약") {}
 void ApplyEffect(Player& player) override
@@ -58,14 +58,14 @@ void ApplyEffect(Player& player) override
     {
         count--;
         std::cout << "방어의 영역을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
-        player.Defense += 5;
-        std::cout << "방어력이 5 상승했습니다. 현재 방어력" << player.Defense << std::endl;
+        player.def_ += 5;
+        std::cout << "방어력이 5 상승했습니다. 현재 방어력" << player.def_ << std::endl;
     }
     else
     {
         std::cout << "남은 방어의 영약이 없습니다." << std::endl;
     }
-};
+}
 
 class Inventory
 {

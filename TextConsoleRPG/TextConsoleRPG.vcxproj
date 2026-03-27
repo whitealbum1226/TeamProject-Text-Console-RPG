@@ -126,28 +126,16 @@
     <ClCompile Include="BattleSystem.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Monster\Goblin.cpp" />
-    <ClCompile Include="Monster\Monster.cpp" />
-    <ClCompile Include="Monster\Orc.cpp" />
-    <ClCompile Include="Monster\Slime.cpp" />
-    <ClCompile Include="Monster\Troll.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RewardSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleSystem.h" />
     <ClInclude Include="Inventory.h" />
-    <ClInclude Include="Monster\Goblin.h" />
-    <ClInclude Include="Monster\Monster.h" />
-    <ClInclude Include="Monster\Orc.h" />
-    <ClInclude Include="Monster\Slime.h" />
-    <ClInclude Include="Monster\Troll.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="RewardSystem.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="TextConsoleRPG.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
