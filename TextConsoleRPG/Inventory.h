@@ -2,15 +2,10 @@
 ﻿#pragma once
 #include <string>
 #include <iostream>
+#include "Player.h"
 
-class Player
-{
-public:
-    size_t hp_ = 50;
-    size_t Attack = 10;
-};
 
-// 아이템 클래스 정의
+//아이템 클래스 정의.
 class Item
 {
 public:
@@ -19,7 +14,6 @@ public:
     virtual ~Item() {};
 };
 
-//'포션을 사용한 상황'을 클래스화해봤습니다.
 class UsePotion
 {
 protected:
@@ -37,6 +31,15 @@ private:
     size_t count = 10;
 };
 
+class BluePotion : public Item, public UsePotion
+{
+public:
+    BluePotion() : Item("파란 포션") {}
+    void ApplyEffect(Player& player) override;
+private:
+    size_t count = 10;
+};
+
 class AttackPotion : public Item, public UsePotion
 {
 public:
@@ -46,6 +49,16 @@ public:
 private:
     size_t count = 3;
 };
+
+class DefensePotion : public Item, public UsePotion
+{
+public:
+    DefensePotion() : Item("방어의 영약") {}
+    void ApplyEffect(Player& player) override;
+private:
+    size_t count = 3;
+};
+
 
 class Inventory
 {
