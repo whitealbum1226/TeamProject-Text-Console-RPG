@@ -3,15 +3,14 @@
 #include <string>
 #include <iostream>
 
-class Player // Player가 이런식으로 대충 만들어졌다고 가정. 얼마든지 갈아엎어질 수 있음.
+class Player
 {
 public:
     size_t hp_ = 50;
-    size_t mp = 50;
     size_t Attack = 10;
 };
 
-//아이템 클래스 정의.
+// 아이템 클래스 정의
 class Item
 {
 public:
@@ -20,6 +19,7 @@ public:
     virtual ~Item() {};
 };
 
+//'포션을 사용한 상황'을 클래스화해봤습니다.
 class UsePotion
 {
 protected:
@@ -32,15 +32,6 @@ class RedPotion : public Item, public UsePotion
 {
 public:
     RedPotion() : Item("빨간 포션") {}
-    void ApplyEffect(Player& player) override;
-private:
-    size_t count = 10;
-};
-
-class BluePotion : public Item, public UsePotion
-{
-public:
-    BluePotion() : Item("파란 포션") {}
     void ApplyEffect(Player& player) override;
 private:
     size_t count = 10;
