@@ -17,6 +17,8 @@ public:
 
     void BattleReady();
 
+    void NextTurn();
+
     void PlayerWin();
 
     void PlayerAttack();
