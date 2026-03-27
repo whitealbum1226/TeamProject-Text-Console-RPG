@@ -14,6 +14,7 @@ public:
 
     std::string GetName() const;
     int GetHP() const;
+    int GetMaxHP() const;
     int GetAttack() const;
     int GetDefense() const;
 
@@ -25,6 +26,7 @@ public:
 private:
     std::string name_;
     int hp_;
+    int maxHp_;
     int attack_;
     int defense_;
 };
