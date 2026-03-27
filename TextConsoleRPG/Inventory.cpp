@@ -1,4 +1,6 @@
 ﻿#include "Inventory.h"
+#include <iostream>
+#include <string>
 
 RedPotion() : Item("빨간 포션") {}
 void ApplyEffect(Player& player) override
@@ -14,7 +16,7 @@ void ApplyEffect(Player& player) override
     {
         std::cout << "남은 포션이 없습니다." << std::endl;
     }
-}
+};
 
 BluePotion() : Item("파란 포션") {}
 void ApplyEffect(Player& player) override
@@ -30,7 +32,7 @@ void ApplyEffect(Player& player) override
     {
         std::cout << "남은 포션이 없습니다." << std::endl;
     }
-}
+};
 
 AttackPotion() : Item("공격의 영약") {}
 void ApplyEffect(Player& player) override
@@ -47,7 +49,7 @@ void ApplyEffect(Player& player) override
         std::cout << "남은 공격의 영약이 없습니다." << std::endl;
     }
 
-}
+};
 
 DefensePotion() : Item("방어의 영약") {}
 void ApplyEffect(Player& player) override
@@ -63,7 +65,7 @@ void ApplyEffect(Player& player) override
     {
         std::cout << "남은 방어의 영약이 없습니다." << std::endl;
     }
-}
+};
 
 class Inventory
 {
@@ -80,12 +82,3 @@ public:
     }
     void AddItem() {}// 이건 나중에 전투에서 몬스터를 죽이고 아이템을 주웠을 때 실행 예정. 아직 미구현.
 };
-
-Inventory()
-{
-    for (int i = 0; i < 40; i++)
-    {
-        items[i] = nullptr;
-    }
-}
-void AddItem() {}// 이건 나중에 전투에서 몬스터를 죽이고 아이템을 주웠을 때 실행 예정. 아직 미구현.

@@ -11,7 +11,6 @@ public:
     size_t Defense = 10;
 };
 
-//아이템 클래스 정의.
 class Item
 {
 public:
