@@ -19,5 +19,9 @@ public:
 
     void PlayerWin();
 
+    void PlayerAttack();
+
+    void MonsterAttack();
+
     void BattleStart();
 };

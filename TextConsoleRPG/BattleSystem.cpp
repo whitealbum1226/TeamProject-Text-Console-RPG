@@ -21,7 +21,7 @@ void BattleSystem::PlayerWin()
 {
     int ShopSelect;
 
-     // player->GetExp += monster->exp 몬스터 경험치 및 플레이어 골드 구현 시 작성
+    player->SetExp(player->GetExp() + 50); // 경험치 50 증가
     std::cout << "상점에 진입 하시겠습니까. (예.1)";
     std::cin >> ShopSelect;
 
@@ -36,38 +36,82 @@ void BattleSystem::PlayerWin()
 
 }
 
+
+void BattleSystem::PlayerAttack()
+{
+    std::cout << player->GetName() << "의 " << turn << "번째 턴" << std::endl;
+    monster->TakeDamage(player->GetAttack());
+}
+
+void BattleSystem::MonsterAttack() {
+    std::cout << monster->GetName() << "의 " << turn << "번째 턴" << std::endl;
+    player->TakeDamage(monster->GetAttack());
+}
 void BattleSystem::BattleStart()
 {
     this->turn = 1; // 전투 시작 시 턴 1로 설정
-    int randomValue = rand() % 100; // 몬스터 출현 확률 0~99 난수
+    int MonsterRandom = rand() % 100; // 몬스터 출현 확률 0~99 난수
 
-    if (randomValue < 50) // 임시로 50%로 구현 이후 특정 조건에 새로운 몬스터 출현하도록 구현
+    if (MonsterRandom < 50) // 임시로 50%로 구현 이후 특정 조건에 새로운 몬스터 출현하도록 구현
     {
-        monster = new Slime(10);
+        monster = new Slime(10); // 임시로 레벨 넣었습니다
     }
-    else if (randomValue < 100)
+    else if (MonsterRandom < 100)
     {
         monster = new Goblin(15);
     }
 
+    BattleReady(); // 몬스터 생성 후 정보 출력
+
     while (player->GetHP() > 0 && monster->GetHP() > 0)
     {
-        std::cout << player->GetName() << "의 " << turn << "번째 턴" << std::endl;
-        monster->TakeDamage(player->GetAttack()); // 플레이어 공격력 만큼 몬스터 체력 깍음
-        if (monster->GetHP() <= 0)
-        {
-            std::cout << monster->GetName() << "을(를) 처치했습니다." << std::endl;
-            PlayerWin();
-            break; // 공격 대상의 체력이 0이면 반복문 탈출
-        }
+        int AttackRandom = rand() % 100; // 플레이어 몬스터 공격 순서 랜덤 (이후 특정 조건으로 확률 변경 가능)
 
-        std::cout << monster->GetName() << "의 " << turn << "번째 턴" << std::endl;
-        player->TakeDamage(monster->GetAttack());
-        if (player->GetHP() <= 0)
+        if (AttackRandom < 50) // 플레이어 선공
         {
-            std::cout << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
-            break;
+            PlayerAttack();
+            if (monster->GetHP() <= 0)
+            {
+                std::cout << monster->GetName() << "을(를) 처치했습니다." << std::endl;
+                PlayerWin();
+                break; // 공격 대상의 체력이 0이면 반복문 탈출
+            }
+
+            MonsterAttack();
+            if (player->GetHP() <= 0)
+            {
+                std::cout << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
+
+
+                break;
+            }
         }
-        turn++;
+        else // 몬스터 선공
+        {
+            MonsterAttack();
+            if (player->GetHP() <= 0)
+            {
+                std::cout << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
+
+
+                break;
+            }
+
+            PlayerAttack();
+            if (monster->GetHP() <= 0)
+            {
+                std::cout << monster->GetName() << "을(를) 처치했습니다." << std::endl;
+                PlayerWin();
+                break; 
+            }
+        }
+  
+        turn++; // 턴 증가
+    }
+
+    if (monster != nullptr) // 몬스터 누수 방지
+    {
+        delete monster;
+        monster = nullptr; 
     }
 }
