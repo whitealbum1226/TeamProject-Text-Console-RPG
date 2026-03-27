@@ -6,10 +6,9 @@
 class Player // Player가 이런식으로 대충 만들어졌다고 가정. 얼마든지 갈아엎어질 수 있음.
 {
 public:
-    size_t Hp = 50;
-    size_t Mp = 50;
+    size_t hp_ = 50;
+    size_t mp = 50;
     size_t Attack = 10;
-    size_t Defense = 10;
 };
 
 //아이템 클래스 정의.
@@ -56,16 +55,6 @@ public:
 private:
     size_t count = 3;
 };
-
-class DefensePotion : public Item, public UsePotion
-{
-public:
-    DefensePotion() : Item("방어의 영약") {}
-    void ApplyEffect(Player& player) override;
-private:
-    size_t count = 3;
-};
-
 
 class Inventory
 {
