@@ -83,16 +83,12 @@ void BattleSystem::PlayerWin()
     int ShopSelect;
     int GoldRandom = (rand() % 11) + 20; // 20~30 골드 랜덤
 
-<<<<<<< HEAD
     player->gainExp(50); // 경험치 50 증가
-=======
-    player->gainExp(50);
     player->gainGold(GoldRandom);
     player->Levelup();
 
     std::cout << "\n축하합니다! 전투에서 승리했습니다." << std::endl;
     std::cout << "얻은 경험치: 50 | 얻은 골드: " << GoldRandom << std::endl;
->>>>>>> main
     std::cout << "상점에 진입 하시겠습니까. (예.1)";
     std::cin >> ShopSelect;
 
