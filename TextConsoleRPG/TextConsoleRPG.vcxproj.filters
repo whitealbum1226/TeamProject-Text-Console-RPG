@@ -13,15 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Monster">
+      <UniqueIdentifier>{64365260-1997-40f3-bf06-c940b62afcf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster\Base">
+      <UniqueIdentifier>{5266cf4a-6166-45d2-9ef6-4a22f7631cc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster\Types">
+      <UniqueIdentifier>{23adae3e-b643-4901-9990-41ba71bbba33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster\Types\Header">
+      <UniqueIdentifier>{c66b2122-0099-414f-adc6-5716235e91f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster\Types\Source">
+      <UniqueIdentifier>{051ee14d-6d42-426d-af32-a0f00becbf22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{b735ce31-2bf8-4942-aef3-c0b6b06bd74a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\Base">
+      <UniqueIdentifier>{b9240131-1048-4d22-8232-5eec992c23a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\type">
+      <UniqueIdentifier>{ddf096ed-d8db-4bcb-bdc1-023694fe7132}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BattleSystem.cpp">
@@ -33,12 +54,33 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Monster\Orc.cpp">
+      <Filter>Monster\Types\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\Slime.cpp">
+      <Filter>Monster\Types\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\Troll.cpp">
+      <Filter>Monster\Types\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\Goblin.cpp">
+      <Filter>Monster\Types\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\Monster.cpp">
+      <Filter>Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Skill\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Slash.cpp">
+      <Filter>Skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BattleSystem.h">
@@ -50,5 +92,37 @@
     <ClInclude Include="Inventory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Monster.h">
+      <Filter>Monster\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Goblin.h">
+      <Filter>Monster\Types\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Orc.h">
+      <Filter>Monster\Types\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Slime.h">
+      <Filter>Monster\Types\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Troll.h">
+      <Filter>Monster\Types\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Skill\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Slash.h">
+      <Filter>Skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TextConsoleRPG.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
