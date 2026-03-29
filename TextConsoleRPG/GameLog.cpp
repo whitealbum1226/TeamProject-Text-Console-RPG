@@ -1,6 +1,6 @@
 ﻿#include "GameLog.h"
 #include "Player.h"
-#include "Monster/Monster.h" // 경로가 폴더 안에 있다면 "Monster/Monster.h" 등으로 맞춰주세요.
+#include "Monster/Monster.h"
 #include "Inventory.h"
 #include <cstdlib>
 
@@ -82,7 +82,7 @@ std::string GameLog::PromptForPlayerName() const {
 
 void GameLog::DrawPlayerCreated(const std::string& name) const {
     ClearScreen();
-    std::cout << "\n  위대한 모험가 [ " << name << " ](이)가 탄생했습니다!\n";
+    std::cout << "\n  모험가 [ " << name << " ]이 생성되었습니다.\n";
     std::cout << R"(
              _._
             /   \
@@ -94,9 +94,9 @@ void GameLog::DrawPlayerCreated(const std::string& name) const {
     )" << '\n';
 }
 
-// ==========================================
+
 // ESC / 스탯창 출력
-// ==========================================
+
 void GameLog::DrawPlayerStatScreen(const Player& player) const {
     ClearScreen();
     std::cout << R"(
@@ -116,9 +116,9 @@ void GameLog::DrawPlayerStatScreen(const Player& player) const {
     std::cout << "  ════════════════════════════════════════\n";
 }
 
-// ==========================================
+
 // 몬스터 아트 및 전투 화면
-// ==========================================
+
 void GameLog::DrawMonsterArt(const std::string& monsterName) const {
     if (monsterName == "Slime") {
         std::cout << R"(
@@ -151,12 +151,20 @@ void GameLog::DrawMonsterArt(const std::string& monsterName) const {
     }
     else if (monsterName == "Troll") {
         std::cout << R"(
-                 .----.
-              _.'__    `.
-          .--($)($$)---/#\
-        .' @          /###\
-        :         ,   #####
-         `-..__.-' _.-\###/
+       .-"-.
+      /     \
+
+     | () () |
+      \  ^  /
+   .-'|`---'|`-.
+  /  /|_____|\  \
+ /  / |_____| \  \
+ \ /  |_____|  \ /
+  `   |_____|   '
+
+      |_____|
+     [_______]
+
         )" << '\n';
     }
 }
@@ -164,7 +172,7 @@ void GameLog::DrawMonsterArt(const std::string& monsterName) const {
 void GameLog::DrawBattleScreen(const Player& player, const Monster& monster) const {
     ClearScreen();
     std::cout << "  ========================================================\n";
-    std::cout << "   [ 야생의 " << monster.GetName() << " ]\n";
+    std::cout << "   [ 앗, 야생의 " << monster.GetName() << " 가 나타났다! ]\n";
     std::cout << "   HP: " << monster.GetHP() << " / " << monster.GetMaxHP()
         << " | Atk: " << monster.GetAttack() << " | Def: " << monster.GetDefense() << "\n";
 
@@ -200,23 +208,20 @@ void GameLog::DrawSkillMenu(const Player& player) const {
 // ==========================================
 void GameLog::DrawAttackPunch() const {
     std::cout << R"(
-          _    _
-         (_)  (_)
-         | |  | |
-      ___| |__| |___
-     |___      ___  |
-         | |  | |
-         | |  | |
-         (_)  (_)
-      [ 강력한 펀치! ]
+
+           /| ________________
+     O|===|* >________________>
+           \| 
+      [ 공격! ]
     )" << '\n';
 }
 
 void GameLog::DrawSkillSlash() const {
     std::cout << R"(
-           /| ________________
-     O|===|* >________________>
-           \| 
+
+       /| ________________
+ O|===|* >================> > > >
+       \|
          [ 쾌속 베기!! ]
     )" << '\n';
 }
@@ -273,7 +278,7 @@ void GameLog::DrawGameOver() const {
         |   |_| ||       || ||_|| ||   |___ 
         |_______||_______||_|   |_||_______|
                 눈앞이 캄캄해졌다...
-                 (모험가 쓰러짐)
+                 
                   _.-'-._
                ,-'       `-.
               /   _     _   \
