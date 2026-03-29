@@ -75,9 +75,12 @@
     <ClCompile Include="Slash.cpp">
       <Filter>Skill\type</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="GameLog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+>>>>>>> 878ba78c6ada2869ade9c868e318e6183d617f8a
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -116,9 +119,12 @@
     <ClInclude Include="Slash.h">
       <Filter>Skill\type</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="GameLog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+>>>>>>> 878ba78c6ada2869ade9c868e318e6183d617f8a
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TextConsoleRPG.rc">

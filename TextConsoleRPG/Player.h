@@ -2,7 +2,9 @@
 
 #pragma once
 #include <string>
-#pragma once
+#include <vector>
+
+class Skill;
 
 class Player
 {
@@ -25,6 +27,7 @@ public:
 
     void SetName(std::string name);
     void SetJob(std::string job);
+    void SetExp(int exp);
     void SetLevel(int level);
     void SetHP(int hp);
     void SetDefense(int def);
@@ -35,12 +38,25 @@ public:
     void Heal(int hp);
     void UseMp(int mp);
     void RecoverMP(int amount);
+<<<<<<< HEAD
 
     void Levelup();
     void PrintStatus();
     
     bool IsAlive() const;
+=======
+    void Levelup();
+    void PrintStatus();
+    void learnSkill(Skill* s) { skillList.push_back(s); }
+    std::vector<Skill*>& getSkillList() { return skillList; }
+>>>>>>> 878ba78c6ada2869ade9c868e318e6183d617f8a
 
+    void TakeDamage(int takeDamage);
+
+    void Levelup();
+    void PrintStatus();
+    bool IsAlive() const;
+   
 private:
     std::string name_;
     std::string job_;
@@ -55,4 +71,9 @@ private:
     int maxExp_;
     int def_;
     int gold_;
+    int maxExp_;
+    int def_;
+    int gold_;
+
+    std::vector<Skill*> skillList;
 };

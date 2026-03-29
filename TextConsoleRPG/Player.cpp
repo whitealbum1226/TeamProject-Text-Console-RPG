@@ -1,9 +1,14 @@
 ﻿//Player.cpp
 
 #include "Player.h"
+
 #include <iostream>
+#include "Skill.h"
+#include "Slash.h"
+#include <iostream>
+#include <vector>
 
-
+// 플레이어 생성자 설정
 // 플레이어 생성자 설정
 Player::Player(const std::string& name)
     : name_(name), job_("용사"),
@@ -42,7 +47,12 @@ void Player::SetDefense(int def) {def_ = def; }
 void Player::gainGold(int G) { gold_ += G; } //골드 얻을때
 void Player::gainExp(int exp) {exp_ += exp; } //경험치 얻을때
 
+<<<<<<< HEAD
 void Player::Heal(int hp) { // HP 채울때 (포션을 먹거나, 특별한 이벤트 등등..)
+=======
+
+void Player::Heal(int hp) { //hp가 채워질때 (포션을 먹거나, 특별한 이벤트 등등..)
+>>>>>>> 878ba78c6ada2869ade9c868e318e6183d617f8a
     hp_ += hp;
     if (hp_ >= maxHp_) {
         hp_ = maxHp_;
@@ -93,17 +103,21 @@ void Player::Levelup() { // 레벨업
 
         attack_ += 10;
         def_ += 5;
+
+        if (level_ == 5)
+        {
+            learnSkill(new Slash());
+            std::cout << "스킬을 획득했습니다" << std::endl;
+        }
     }
 }
 
-void Player::PrintStatus() {
-    std::cout << "이름: " << name_ << std::endl;
-    std::cout << "직업: " << job_ << std::endl;
-    std::cout << "레벨: " << level_ << " / 최대 레벨: " << maxLevel_ << std::endl;
-    std::cout << "HP: " << hp_ << " / 최대 HP: " << maxHp_ << std::endl;
-    std::cout << "MP: " << mp_ << " / 최대 MP: " << maxMp_ << std::endl;
-    std::cout << "공격력: " << attack_ << std::endl;
-    std::cout << "방어력: " << def_ << std::endl;
-    std::cout << "EXP: " << exp_ << " / 최대 EXP: " << maxExp_ << std::endl;
-    std::cout << "골드: " << gold_ << std::endl;
+Player::~Player()
+{
+    for (Skill* s : skillList)
+    {
+        delete s; 
+    }
+    skillList.clear();
 }
+
