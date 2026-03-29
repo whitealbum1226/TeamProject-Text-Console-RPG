@@ -1,6 +1,7 @@
-﻿#include "GameLog.h"
+﻿// GameLog.cpp
+#include "GameLog.h" 
 #include "Player.h"
-#include "Monster/Monster.h"
+#include "Monster/Monster.h" 
 #include "Inventory.h"
 #include <cstdlib>
 
@@ -75,14 +76,17 @@ std::string GameLog::PromptForPlayerName() const {
     ClearScreen();
     std::string inputName;
     std::cout << "\n  모험가의 이름을 입력하세요: ";
-    std::cin >> inputName;
-    std::cin.ignore(256, '\n');
+    std::getline(std::cin, inputName);
+
+    if (inputName.empty()) {
+        std::getline(std::cin, inputName);
+    }
     return inputName;
 }
 
 void GameLog::DrawPlayerCreated(const std::string& name) const {
     ClearScreen();
-    std::cout << "\n  모험가 [ " << name << " ]이 생성되었습니다.\n";
+    std::cout << "\n  위대한 모험가 [ " << name << " ](이)가 탄생했습니다!\n";
     std::cout << R"(
              _._
             /   \
@@ -94,15 +98,15 @@ void GameLog::DrawPlayerCreated(const std::string& name) const {
     )" << '\n';
 }
 
-
-// ESC / 스탯창 출력
-
+// ==========================================
+// ESC / 스탯창 출력 (특수문자 교체)
+// ==========================================
 void GameLog::DrawPlayerStatScreen(const Player& player) const {
     ClearScreen();
     std::cout << R"(
-  ╔════════════════════════════════════════╗
-  ║            [ STATS WINDOW ]            ║
-  ╚════════════════════════════════════════╝
+  +========================================+
+  |            [ STATS WINDOW ]            |
+  +========================================+
     )" << '\n';
 
     std::cout << "   이름    : " << player.GetName() << " (" << player.GetJob() << ")\n";
@@ -113,12 +117,12 @@ void GameLog::DrawPlayerStatScreen(const Player& player) const {
     std::cout << "   방어력  : " << player.GetDefense() << "\n";
     std::cout << "   경험치  : " << player.GetExp() << " / " << player.GetMaxExp() << "\n";
     std::cout << "   소지금  : " << player.GetGold() << " G\n";
-    std::cout << "  ════════════════════════════════════════\n";
+    std::cout << "  ========================================\n";
 }
 
-
+// ==========================================
 // 몬스터 아트 및 전투 화면
-
+// ==========================================
 void GameLog::DrawMonsterArt(const std::string& monsterName) const {
     if (monsterName == "Slime") {
         std::cout << R"(
@@ -151,28 +155,23 @@ void GameLog::DrawMonsterArt(const std::string& monsterName) const {
     }
     else if (monsterName == "Troll") {
         std::cout << R"(
-       .-"-.
-      /     \
-
-     | () () |
-      \  ^  /
-   .-'|`---'|`-.
-  /  /|_____|\  \
- /  / |_____| \  \
- \ /  |_____|  \ /
-  `   |_____|   '
-
-      |_____|
-     [_______]
-
+                 .----.
+              _.'__    `.
+          .--($)($$)---/#\
+        .' @          /###\
+        :         ,   #####
+         `-..__.-' _.-\###/
         )" << '\n';
+    }
+    else {
+        std::cout << "\n       [ 미지의 기운이 느껴진다... ]\n\n";
     }
 }
 
 void GameLog::DrawBattleScreen(const Player& player, const Monster& monster) const {
     ClearScreen();
     std::cout << "  ========================================================\n";
-    std::cout << "   [ 앗, 야생의 " << monster.GetName() << " 가 나타났다! ]\n";
+    std::cout << "   [ 야생의 " << monster.GetName() << " ]\n";
     std::cout << "   HP: " << monster.GetHP() << " / " << monster.GetMaxHP()
         << " | Atk: " << monster.GetAttack() << " | Def: " << monster.GetDefense() << "\n";
 
@@ -189,12 +188,12 @@ void GameLog::DrawBattleScreen(const Player& player, const Monster& monster) con
     }
     std::cout << "  ========================================================\n";
 
-    // 전투 메뉴 (선택 창)
+    // 전투 메뉴 (선택 창 - 특수문자 교체)
     std::cout << R"(
-   ╔═════════════════════════════════════════════════════╗
-   ║  1. 공격 (Attack)   |  2. 가방 (Inventory)          ║
-   ║  3. 스킬 (Skill)    |  0. 도망 (Run)                ║
-   ╚═════════════════════════════════════════════════════╝
+   +=====================================================+
+   |  1. 공격 (Attack)   |  2. 가방 (Inventory)          |
+   |  3. 스킬 (Skill)    |  0. 도망 (Run)                |
+   +=====================================================+
     )" << '\n';
 }
 
@@ -208,33 +207,36 @@ void GameLog::DrawSkillMenu(const Player& player) const {
 // ==========================================
 void GameLog::DrawAttackPunch() const {
     std::cout << R"(
-
-           /| ________________
-     O|===|* >________________>
-           \| 
-      [ 공격! ]
+          _    _
+         (_)  (_)
+         | |  | |
+      ___| |__| |___
+     |___      ___  |
+         | |  | |
+         | |  | |
+         (_)  (_)
+      [ 강력한 펀치! ]
     )" << '\n';
 }
 
 void GameLog::DrawSkillSlash() const {
     std::cout << R"(
-
-       /| ________________
- O|===|* >================> > > >
-       \|
+           /| ________________
+     O|===|* >________________>
+           \| 
          [ 쾌속 베기!! ]
     )" << '\n';
 }
 
 // ==========================================
-// 인벤토리 창
+// 인벤토리 창 (특수문자 교체)
 // ==========================================
 void GameLog::DrawInventoryScreen(const Inventory& inv) const {
     ClearScreen();
     std::cout << R"(
-  ╔════════════════════════════════════════╗
-  ║             [ INVENTORY ]              ║
-  ╚════════════════════════════════════════╝
+  +========================================+
+  |             [ INVENTORY ]              |
+  +========================================+
     )" << '\n';
 
     if (inv.itemcount == 0) {
@@ -247,7 +249,7 @@ void GameLog::DrawInventoryScreen(const Inventory& inv) const {
             }
         }
     }
-    std::cout << "  ════════════════════════════════════════\n";
+    std::cout << "  ========================================\n";
     std::cout << "   0. 닫기\n";
 }
 
@@ -278,7 +280,7 @@ void GameLog::DrawGameOver() const {
         |   |_| ||       || ||_|| ||   |___ 
         |_______||_______||_|   |_||_______|
                 눈앞이 캄캄해졌다...
-                 
+                 (모험가 쓰러짐)
                   _.-'-._
                ,-'       `-.
               /   _     _   \

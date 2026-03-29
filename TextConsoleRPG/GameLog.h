@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿// GameLog.h
+#pragma once
 #include <string>
 #include <vector>
 #include <iostream>
@@ -12,7 +13,6 @@ struct KillRecord {
     int count;
 };
 
-// 클래스 이름이 GameLog로 변경되었습니다.
 class GameLog
 {
 private:
@@ -23,8 +23,7 @@ private:
     void DrawMonsterArt(const std::string& monsterName) const;
 
 public:
-    // 생성자 이름도 GameLog로 변경되었습니다.
-    GameLog(size_t maxLines = 6);
+    GameLog(size_t maxLines = 6); // 생성자 이름도 GameLog
 
     void ClearScreen() const;
 
