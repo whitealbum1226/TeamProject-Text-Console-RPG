@@ -92,11 +92,7 @@ void BossDragon::HellFireTailSwing()
     // BattleSystem에서 2페이즈 강화 물리 데미지 적용
 }
 
-
-// 배틀 구현때 참고용
-//std::cout << "\n===== 보스 전투 시작 =====\n";
-//std::cout << boss.GetName() << " 이(가) 나타났다!!\n";
-
+// 참고용
 //while (boss.GetHP() > 0 && player.GetHP() > 0)
 //{
     // 플레이어 턴
