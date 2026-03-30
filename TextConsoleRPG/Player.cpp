@@ -5,6 +5,9 @@
 #include <iostream>
 #include "Skill.h"
 #include "Slash.h"
+#include "Boom.h"
+#include "HealSkill.h"
+#include "MultiStrike.h"
 #include <iostream>
 #include <vector>
 
@@ -103,10 +106,28 @@ void Player::Levelup() { // 레벨업
         attack_ += 10;
         def_ += 5;
 
-        if (level_ == 5)
+        if (level_ == 2) // 레벨 2 달성 시 스킬 해금
+        {
+            learnSkill(new HealSkill());
+            std::cout << "신규 스킬을 획득했습니다" << std::endl;
+        }
+
+        if (level_ == 3) // 레벨 3 달성 시 스킬 해금
         {
             learnSkill(new Slash());
-            std::cout << "스킬을 획득했습니다" << std::endl;
+            std::cout << "신규 스킬을 획득했습니다" << std::endl;
+        }
+
+        if (level_ == 5) // 레벨 5 달성 시 스킬 해금
+        {
+            learnSkill(new Boom());
+            std::cout << "신규 스킬을 획득했습니다" << std::endl;
+        }
+
+        if (level_ == 7) // 레벨 7 달성 시 스킬 해금
+        {
+            learnSkill(new MultiStrike());
+            std::cout << "신규 스킬을 획득했습니다" << std::endl;
         }
     }
 }

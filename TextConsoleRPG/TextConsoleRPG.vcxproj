@@ -124,6 +124,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BattleSystem.cpp" />
+    <ClCompile Include="Boom.cpp" />
+    <ClCompile Include="HealSkill.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Monster\BossDragon.cpp" />
@@ -133,6 +135,7 @@
     <ClCompile Include="Monster\Orc.cpp" />
     <ClCompile Include="Monster\Slime.cpp" />
     <ClCompile Include="Monster\Troll.cpp" />
+    <ClCompile Include="MultiStrike.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RewardSystem.cpp" />
     <ClCompile Include="Skill.cpp" />
@@ -141,6 +144,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleSystem.h" />
+    <ClInclude Include="boom.h" />
+    <ClInclude Include="HealSkill.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Monster\BossDragon.h" />
     <ClInclude Include="Monster\BossMonster.h" />
@@ -149,6 +154,7 @@
     <ClInclude Include="Monster\Orc.h" />
     <ClInclude Include="Monster\Slime.h" />
     <ClInclude Include="Monster\Troll.h" />
+    <ClInclude Include="MultiStrike.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RewardSystem.h" />

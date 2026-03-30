@@ -62,7 +62,5 @@ private:
     int def_;
     int gold_;
 
-
-
     std::vector<Skill*> skillList;
 };
