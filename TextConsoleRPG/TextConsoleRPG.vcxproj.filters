@@ -75,6 +75,9 @@
     <ClCompile Include="Slash.cpp">
       <Filter>Skill\type</Filter>
     </ClCompile>
+    <ClCompile Include="Store.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Slash.h">
       <Filter>Skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="Store.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
