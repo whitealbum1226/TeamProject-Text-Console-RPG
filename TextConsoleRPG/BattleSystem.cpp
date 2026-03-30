@@ -6,8 +6,9 @@
 #include "Skill.h"
 #include "Slash.h"
 #include "Boom.h"
-#include "Heal.h"
+#include "HealSkill.h"
 #include "MultiStrike.h"
+#include "Blood.h"
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -113,11 +114,27 @@ void BattleSystem::PlayerAttack()
 void BattleSystem::MonsterAttack() {
     std::cout << monster->GetName() << "의 " << turn << "번째 턴" << std::endl;
     player->TakeDamage(monster->GetAttack());
+    if (blood != nullptr && blood->GetBloodCount() > 0) // 출혈 스킬이 있고 카운트가 0보다 클 경우
+    {
+        monster->TakeDamage(blood->GetBloodDamage());
+        blood->SetBloodCount(blood->GetBloodCount() - 1);
+    }
 }
 void BattleSystem::BattleStart()
 {
     this->turn = 1; // 전투 시작 시 턴 1로 설정
     int MonsterRandom = rand() % 100; // 몬스터 출현 확률 0~99 난수
+
+    this->blood = nullptr; // 지속 피해
+    auto& skills = player->getSkillList();
+    for (int i = 0; i < (int)skills.size(); ++i) // 출혈 스킬을 배웠을 경우 포인터에 스킬을 넣음
+    {
+        if (skills[i]->getName() == "출혈")
+        {
+            blood = (Blood*)skills[i];
+            break; 
+        }
+    }
 
     if (MonsterRandom < 50) // 임시로 50%로 구현 이후 특정 조건에 새로운 몬스터 출현하도록 구현
     {
@@ -134,8 +151,9 @@ void BattleSystem::BattleStart()
     {
         int AttackRandom = rand() % 100; // 플레이어 몬스터 공격 순서 랜덤 (이후 특정 조건으로 확률 변경 가능)
 
-        if (AttackRandom < 50) // 플레이어 선공
+        if (AttackRandom < 50 || player->GetQuickAttack() == true) // 플레이어 선공 (신속 스킬 사용 시 선공 구현)
         {
+            player->SetQuickAttack(false);
             PlayerAttack();
             if (monster->GetHP() <= 0)
             {
@@ -157,6 +175,12 @@ void BattleSystem::BattleStart()
             if (player->GetHP() <= 0)
             {
                 std::cout << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
+                break;
+            }
+            if (monster->GetHP() <= 0) // 몬스터가 출혈로 죽었을 경우를 대비
+            {
+                std::cout << monster->GetName() << "을(를) 처치했습니다." << std::endl;
+                PlayerWin();
                 break;
             }
 

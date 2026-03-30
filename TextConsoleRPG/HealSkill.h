@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "Skill.h"
 
 class Player;

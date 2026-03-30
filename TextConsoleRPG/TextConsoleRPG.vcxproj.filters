@@ -40,6 +40,12 @@
     <Filter Include="Monster\Boss">
       <UniqueIdentifier>{a0374fac-d9a1-4d92-90b9-af870c1de593}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Skill\type\Header">
+      <UniqueIdentifier>{7c17c8f9-f836-48b9-9294-9f1904dc0c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\type\Source">
+      <UniqueIdentifier>{193315bb-f02c-44a5-9756-a790da8876d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -75,9 +81,6 @@
     <ClCompile Include="Skill.cpp">
       <Filter>Skill\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Slash.cpp">
-      <Filter>Skill\type</Filter>
-    </ClCompile>
     <ClCompile Include="Store.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -86,6 +89,24 @@
     </ClCompile>
     <ClCompile Include="Monster\BossDragon.cpp">
       <Filter>Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiStrike.cpp">
+      <Filter>Skill\type\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Boom.cpp">
+      <Filter>Skill\type\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HealSkill.cpp">
+      <Filter>Skill\type\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Slash.cpp">
+      <Filter>Skill\type\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="QuickAttack.cpp">
+      <Filter>Skill\type\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Blood.cpp">
+      <Filter>Skill\type\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,9 +143,6 @@
     <ClInclude Include="Skill.h">
       <Filter>Skill\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Slash.h">
-      <Filter>Skill\type</Filter>
-    </ClInclude>
     <ClInclude Include="Store.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -133,6 +151,27 @@
     </ClInclude>
     <ClInclude Include="Monster\BossMonster.h">
       <Filter>Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Slash.h">
+      <Filter>Skill\type\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="boom.h">
+      <Filter>Skill\type\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="HealSkill.h">
+      <Filter>Skill\type\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiStrike.h">
+      <Filter>Skill\type\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickAttack.h">
+      <Filter>Skill\type\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Blood.h">
+      <Filter>Skill\type\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
