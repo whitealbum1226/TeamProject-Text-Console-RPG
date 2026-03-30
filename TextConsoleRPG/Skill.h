@@ -1,10 +1,6 @@
 ﻿#pragma once
 
-#include <iostream>
-#include "Monster/Monster.h"
-#include "Player.h"
 #include <string>
-#include <vector>
 
 class Player;
 class Monster;
@@ -17,7 +13,6 @@ protected:
 
 public:
     Skill(std::string n, int m) : name(n), mpConsume(m) {}
-
     virtual ~Skill() {}
 
     virtual bool useSkill(Player& p, Monster& m) = 0;

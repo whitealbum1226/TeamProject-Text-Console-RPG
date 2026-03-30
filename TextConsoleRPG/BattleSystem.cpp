@@ -5,6 +5,9 @@
 #include "Monster/Goblin.h"
 #include "Skill.h"
 #include "Slash.h"
+#include "Boom.h"
+#include "Heal.h"
+#include "MultiStrike.h"
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -67,13 +70,11 @@ void BattleSystem::NextTurn()
                 // 마나 부족 등으로 사용 실패 시 다시 메뉴로
                 continue;
             }
-
             return;
+        }
         default:
             std::cout << "잘못된 입력입니다." << std::endl;
             continue;
-
-        }
         }
     }
 }
@@ -147,8 +148,6 @@ void BattleSystem::BattleStart()
             if (player->GetHP() <= 0)
             {
                 std::cout << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
-
-
                 break;
             }
         }
@@ -158,8 +157,6 @@ void BattleSystem::BattleStart()
             if (player->GetHP() <= 0)
             {
                 std::cout << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
-
-
                 break;
             }
 
