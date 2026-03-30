@@ -138,6 +138,7 @@
     <ClCompile Include="RewardSystem.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Slash.cpp" />
+    <ClCompile Include="Store.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleSystem.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="RewardSystem.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="Slash.h" />
+    <ClInclude Include="Store.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
