@@ -11,4 +11,6 @@ public:
     HealSkill() : Skill("회복", 20) {}
 
     virtual bool useSkill(Player& p, Monster& m) override;
+
+    void ShowDetail();
 };

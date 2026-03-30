@@ -11,4 +11,6 @@ public:
     Slash() : Skill("슬래시", 20) {}
 
     virtual bool useSkill(Player& p, Monster& m) override;
+
+    void ShowDetail();
 };

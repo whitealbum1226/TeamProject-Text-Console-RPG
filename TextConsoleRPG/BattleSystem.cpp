@@ -9,6 +9,8 @@
 #include "HealSkill.h"
 #include "MultiStrike.h"
 #include "Blood.h"
+#include "ManaBurn.h"
+#include "Roulette.h"
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -39,39 +41,39 @@ void BattleSystem::NextTurn()
         case 2:
             // 인벤토리 화면
             continue;
+            // BattleSystem.cpp 내 NextTurn 함수 중 일부 수정
         case 3:
         {
             auto& skills = player->getSkillList();
-
-            if (skills.empty()) //배운 스킬이 없을 경우
-            {
+            if (skills.empty()) {
                 std::cout << "배운 스킬이 없습니다!" << std::endl;
                 continue;
             }
-            std::cout << "\n[ 스킬 목록 ]" << std::endl;
-            for (int i = 0; i < (int)skills.size(); ++i)
-            {
-                std::cout << i + 1 << ". " << skills[i]->getName() << " (MP: " << skills[i]->getMpConsume() << ")" << std::endl;
+
+            while (true) {
+                std::cout << "\n[ 스킬 메뉴 ]" << std::endl;
+                std::cout << "1. 스킬 사용 / 2. 스킬 상세 설명 / 0. 뒤로 가기" << std::endl;
+                std::cout << "선택: ";
+                int skillMenu;
+                std::cin >> skillMenu;
+
+                if (skillMenu == 0) break;
+
+                if (skillMenu == 1) { // 기존 사용 로직
+                    std::cout << "\n[ 사용 가능한 스킬 ]" << std::endl;
+                    for (int i = 0; i < (int)skills.size(); ++i)
+                    {
+                        std::cout << i + 1 << ". " << skills[i]->getName() << " (MP: " << skills[i]->getMpConsume() << ")" << std::endl;
+                    }
+
+                    return;
+                }
+                else if (skillMenu == 2) // 스킬 설명
+                { 
+                    // 스킬 설명 창 구현 예정
+                }
             }
-
-            std::cout << "0. 취소\n번호 선택: ";
-
-            int subSelect;
-            std::cin >> subSelect;
-
-            if (subSelect == 0) continue; // 선택 창으로 돌아감
-            if (subSelect < 1 || subSelect >(int)skills.size())
-            {
-                std::cout << "잘못된 번호입니다." << std::endl;
-                continue;
-            }
-
-            if (!skills[subSelect - 1]->useSkill(*player, *monster))
-            {
-                // 마나 부족 등으로 사용 실패 시 다시 메뉴로
-                continue;
-            }
-            return;
+            continue;
         }
         default:
             std::cout << "잘못된 입력입니다." << std::endl;

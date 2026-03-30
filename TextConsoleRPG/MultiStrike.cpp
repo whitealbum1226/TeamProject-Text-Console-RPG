@@ -11,14 +11,14 @@ bool MultiStrike::useSkill(Player& p, Monster& m)
     {
         p.UseMp(mpConsume);
 
-        int attackCount = (rand() % 4) + 2; // 2 ~ 5번 랜덤 공격
+        int attackCount = (rand() % 3) + 2; // 2 ~ 4번 랜덤 공격
 
         std::cout << name << "을 사용합니다 " << std::endl;
 
         for (int i = 1; i <= attackCount; i++)
         {
-            int damage = p.GetAttack();
-            m.TakeDamage(damage);
+            std::cout << i << "번째 공격! ";
+            m.TakeDamage(p.GetAttack());
         }
 
         std::cout << attackCount << "번 공격했습니다." << std::endl;
@@ -29,4 +29,13 @@ bool MultiStrike::useSkill(Player& p, Monster& m)
         std::cout << "MP가 부족합니다." << std::endl;
         return false;
     }
+}
+
+void MultiStrike::ShowDetail()
+{
+    std::cout << "\n========================================" << std::endl;
+    std::cout << " [스킬명] " << name << " (소모 MP: " << mpConsume << ")" << std::endl;
+    std::cout << " [설  명] 마나를 소비하여 적을 여러 번 공격한다" << std::endl;
+    std::cout << "          같은 확률로 적을 최소 2번, 최대 4번 공격한다 " << std::endl;
+    std::cout << "========================================" << std::endl;
 }

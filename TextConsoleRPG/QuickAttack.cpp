@@ -19,3 +19,12 @@ bool QuickAttack::useSkill(Player& p, Monster& m)
         return false;
     }
 }
+
+void QuickAttack::ShowDetail()
+{
+    std::cout << "\n========================================" << std::endl;
+    std::cout << " [스킬명] " << name << " (소모 MP: " << mpConsume << ")" << std::endl;
+    std::cout << " [설  명] 마나를 사용해 적보다 빠르게 움직여 먼저 공격한다" << std::endl;
+    std::cout << "         스킬을 사용하는 턴에 반드시 선제공격을 한다." << std::endl;
+    std::cout << "========================================" << std::endl;
+}

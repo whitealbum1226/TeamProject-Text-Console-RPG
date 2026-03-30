@@ -11,4 +11,6 @@ public:
     QuickAttack() : Skill("신속", 10) {}
 
     virtual bool useSkill(Player& p, Monster& m) override;
+
+    void ShowDetail();
 };

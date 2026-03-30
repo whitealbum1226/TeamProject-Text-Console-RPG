@@ -108,6 +108,12 @@
     <ClCompile Include="Blood.cpp">
       <Filter>Skill\type\Source</Filter>
     </ClCompile>
+    <ClCompile Include="ManaBurn.cpp">
+      <Filter>Skill\type\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Roulette.cpp">
+      <Filter>Skill\type\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -173,10 +179,18 @@
     <ClInclude Include="Blood.h">
       <Filter>Skill\type\Header</Filter>
     </ClInclude>
+    <ClInclude Include="ManaBurn.h">
+      <Filter>Skill\type\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TextConsoleRPG.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Roulette.h">
+      <Filter>Skill\type\Header</Filter>
+    </None>
   </ItemGroup>
 </Project>

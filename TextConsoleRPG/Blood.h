@@ -17,7 +17,10 @@ public:
 
     int SetBloodCount(int count) { return bloodCount = count; }
 
+    void ShowDetail();
+
 private:
     int bloodCount = 3; // 지속피해 턴
     int bloodDamage = 30; // 지속피해 데미지
 };
+

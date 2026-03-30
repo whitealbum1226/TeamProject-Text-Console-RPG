@@ -11,4 +11,6 @@ public:
     Boom() : Skill("폭발", 50) {}
 
     virtual bool useSkill(Player& p, Monster& m) override;
+
+    void ShowDetail();
 };

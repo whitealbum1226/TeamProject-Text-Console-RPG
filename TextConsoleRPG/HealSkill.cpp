@@ -34,3 +34,12 @@ bool HealSkill::useSkill(Player& p, Monster& m)
 
     return true;
 }
+
+void HealSkill::ShowDetail()
+{
+    std::cout << "\n========================================" << std::endl;
+    std::cout << " [스킬명] " << name << " (소모 MP: " << mpConsume << ")" << std::endl;
+    std::cout << " [설  명] 마나를 소비하여 자신을 치료합니다." << std::endl;
+    std::cout << "          플레이어의 체력을 50 회복합니다." << std::endl;
+    std::cout << "========================================" << std::endl;
+}

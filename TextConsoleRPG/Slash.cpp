@@ -22,3 +22,12 @@ bool Slash::useSkill(Player& p, Monster& m)
         return false;
     }
 }
+
+void Slash::ShowDetail()
+{
+    std::cout << "\n========================================" << std::endl;
+    std::cout << " [스킬명] " << name << " (소모 MP: " << mpConsume << ")" << std::endl;
+    std::cout << " [설  명] 적에게 검귀를 날린다." << std::endl;
+    std::cout << "          플레이어 공격력의 2배만큼 데미지를 준다." << std::endl;
+    std::cout << "========================================" << std::endl;
+}
