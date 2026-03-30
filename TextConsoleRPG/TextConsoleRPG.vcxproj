@@ -158,6 +158,9 @@
     <ClInclude Include="Slash.h" />
     <ClInclude Include="Store.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TextConsoleRPG.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

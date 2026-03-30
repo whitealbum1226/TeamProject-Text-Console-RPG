@@ -87,6 +87,9 @@
     <ClCompile Include="Monster\BossDragon.cpp">
       <Filter>Monster\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="GameLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Monster\BossMonster.h">
       <Filter>Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLog.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
