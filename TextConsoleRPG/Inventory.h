@@ -62,9 +62,7 @@ private:
 class Inventory
 {
 public:
-    Item* items[40];
-    size_t itemcount = 0;
-
+    Item* items[4];
     Inventory();
-    void AddItem();// 이건 나중에 전투에서 몬스터를 죽이고 아이템을 주웠을 때 실행 예정. 아직 미구현.
+    void AddItem(Item* newItem);
 };

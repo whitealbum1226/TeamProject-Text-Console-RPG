@@ -70,15 +70,16 @@ void DefensePotion::ApplyEffect(Player& player) override
 class Inventory
 {
 public:
-    Item* items[40];
-    size_t itemcount = 0;
-
+    Item* items[4];
     Inventory()
     {
-        for (int i = 0; i < 40; i++)
-        {
-            items[i] = nullptr;
-        }
+        items[0] = nullptr;
+        items[1] = nullptr;
+        items[2] = nullptr;
+        items[3] = nullptr;
     }
-    void AddItem() {}// 이건 나중에 전투에서 몬스터를 죽이고 아이템을 주웠을 때 실행 예정. 아직 미구현.
+    void AddItem(Item* newItem)
+    {
+
+    }
 };
