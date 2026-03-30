@@ -24,6 +24,7 @@ public:
     int GetMaxMP() const;
     int GetMP() const;
     int GetGold() const;
+    bool GetQuickAttack() { return quickAttack; }
 
     void SetName(std::string name);
     void SetJob(std::string job);
@@ -38,6 +39,7 @@ public:
     void UseMp(int mp);
     void RecoverMP(int mp);
 
+    void SetQuickAttack(bool state) { quickAttack = state; }
     void learnSkill(Skill* s) { skillList.push_back(s); }
     std::vector<Skill*>& getSkillList() { return skillList; }
 
@@ -62,7 +64,6 @@ private:
     int def_;
     int gold_;
 
-
-
+    bool quickAttack = false; // 선공 맴버 변수
     std::vector<Skill*> skillList;
 };

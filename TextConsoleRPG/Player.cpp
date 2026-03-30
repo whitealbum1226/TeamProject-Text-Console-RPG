@@ -5,7 +5,13 @@
 #include <iostream>
 #include "Skill.h"
 #include "Slash.h"
-#include <iostream>
+#include "Boom.h"
+#include "HealSkill.h"
+#include "MultiStrike.h"
+#include "QuickAttack.h"
+#include "ManaBurn.h"  
+#include "Blood.h"
+#include "Roulette.h"
 #include <vector>
 
 // 플레이어 생성자 설정
@@ -103,11 +109,38 @@ void Player::Levelup() { // 레벨업
         attack_ += 10;
         def_ += 5;
 
-        if (level_ == 5)
+        if (level_ == 2) // 레벨 2 달성 시 스킬 해금
+        {
+            learnSkill(new HealSkill());
+            learnSkill(new QuickAttack());
+            std::cout << "신규 스킬(회복, 신속)을 획득했습니다" << std::endl;
+        }
+
+        if (level_ == 3) // 레벨 3 달성 시 스킬 해금
         {
             learnSkill(new Slash());
-            std::cout << "스킬을 획득했습니다" << std::endl;
+            learnSkill(new Blood());
+            std::cout << "신규 스킬(슬래시, 출혈)을 획득했습니다" << std::endl;
         }
+
+        if (level_ == 5) // 레벨 5 달성 시 스킬 해금
+        {
+            learnSkill(new Boom());
+            learnSkill(new ManaBurn());
+            std::cout << "신규 스킬(폭발, 마나 익스플로전)을 획득했습니다" << std::endl;
+        }
+
+        if (level_ == 7) // 레벨 7 달성 시 스킬 해금
+        {
+            learnSkill(new MultiStrike());
+            std::cout << "신규 스킬(연속 공격)을 획득했습니다" << std::endl;
+        }
+        if (level_ == 10) // 레벨 10 달성 시 스킬 해금
+        {
+            learnSkill(new Roulette());
+            std::cout << "신규 스킬(운명의 룰렛)을 획득했습니다" << std::endl;
+        }
+
     }
 }
 

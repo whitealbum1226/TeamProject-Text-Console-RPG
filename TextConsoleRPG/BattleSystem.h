@@ -11,6 +11,7 @@ private:
     Player* player;
     Monster* monster;
     int turn = 1;
+    Blood* blood;
 
 public:
     BattleSystem(Player* p, Monster* m);

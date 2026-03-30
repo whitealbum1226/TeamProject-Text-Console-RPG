@@ -1,7 +1,17 @@
 ﻿#pragma once
-#include "Skill.h"
+#include <string>
 
-class Slash : public Skill {
+class Player;
+class Monster;
+
+class Skill
+{
+protected:
+    std::string name;
+    int mpConsume;
+
 public:
-    bool useSkill(Player& p, Monster& m) override; 
+    virtual ~Skill() {}
+
+    virtual bool useSkill(Player& p, Monster& m) = 0;
 };

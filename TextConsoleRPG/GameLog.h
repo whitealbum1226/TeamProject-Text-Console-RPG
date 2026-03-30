@@ -28,7 +28,7 @@ public:
 
     void ClearScreen() const;
 
-    // 중요 이벤트 로그 및 처치 기록
+    //이벤트 로그 및 처치 기록
     void AddLog(const std::string& msg);
     void RecordMonsterKill(const std::string& monsterName);
     void DrawKillSummary() const;

@@ -1,16 +1,13 @@
-﻿#include "Slash.h"      
+﻿#include "Blood.h"      
 #include "Player.h"     
 #include "Monster/Monster.h"
 #include <iostream>
 
-bool Slash::useSkill(Player& p, Monster& m)
+bool Blood::useSkill(Player& p, Monster& m)
 {
     if (p.GetMP() >= mpConsume)
     {
         p.UseMp(mpConsume);
-
-        int damage = p.GetAttack() * 2; //데미지 로직
-        m.TakeDamage(damage);
 
         std::cout << name << "을 사용합니다 " << std::endl;
 
@@ -23,11 +20,11 @@ bool Slash::useSkill(Player& p, Monster& m)
     }
 }
 
-void Slash::ShowDetail()
+void Blood::ShowDetail()
 {
     std::cout << "\n========================================" << std::endl;
     std::cout << " [스킬명] " << name << " (소모 MP: " << mpConsume << ")" << std::endl;
-    std::cout << " [설  명] 적에게 검귀를 날린다." << std::endl;
-    std::cout << "          플레이어 공격력의 2배만큼 데미지를 준다." << std::endl;
+    std::cout << " [설  명] 적에게 출혈을 입힙니다." << std::endl;
+    std::cout << "          3턴동안 몬스터가 플레이어를 공격 후 30에 데미지를 입습니다." << std::endl;
     std::cout << "========================================" << std::endl;
 }

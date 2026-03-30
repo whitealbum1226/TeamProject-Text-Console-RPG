@@ -5,10 +5,10 @@
 class Player;
 class Monster;
 
-class Slash : public Skill
+class QuickAttack : public Skill
 {
 public:
-    Slash() : Skill("슬래시", 20) {}
+    QuickAttack() : Skill("신속", 10) {}
 
     virtual bool useSkill(Player& p, Monster& m) override;
 
