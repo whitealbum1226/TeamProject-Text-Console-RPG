@@ -9,7 +9,7 @@ class Item
 {
 public:
     std::string name_;
-    Item(const std::string& name_) : name_(name) {};
+    Item(const std::string& name) : name_(name) {};
     virtual ~Item() {};
 };
 
