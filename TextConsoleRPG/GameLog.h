@@ -5,7 +5,7 @@
 #include <iostream>
 
 class Player;
-class Monster;
+class Monster; // 몬스터 클래스 전방 선언
 class Inventory;
 
 struct KillRecord {
@@ -16,42 +16,47 @@ struct KillRecord {
 class GameLog
 {
 private:
-    std::vector<std::string> eventLogs;    // 전투, 아이템 사용 등 중요 이벤트 로그
-    std::vector<KillRecord> killRecords;   // 몬스터 처치 기록
+    std::vector<std::string> eventLogs;
+    std::vector<KillRecord> killRecords;
     size_t maxLogLines;
 
-    void DrawMonsterArt(const std::string& monsterName) const;
+    
+    void DrawMonsterArt(const Monster& monster) const;
+
+    std::string MakeHPBar(int hp, int maxHp) const; // 체력바 생성
 
 public:
-    GameLog(size_t maxLines = 6); // 생성자 이름도 GameLog
+    GameLog(size_t maxLines = 6);
 
     void ClearScreen() const;
 
-    // --- 로그 및 처치 통계 ---
+    //처치한 몹 기록
     void AddLog(const std::string& msg);
     void RecordMonsterKill(const std::string& monsterName);
     void DrawKillSummary() const;
 
-    // --- 기본 UI (타이틀, 이름 입력, 스탯창) ---
+    //게임 타이틀
     void DrawTitleScreen() const;
+
+    //플레이어 스탯창
     std::string PromptForPlayerName() const;
     void DrawPlayerCreated(const std::string& name) const;
     void DrawPlayerStatScreen(const Player& player) const;
 
-    // --- 전투 화면 및 메뉴 ---
+    //전투
     void DrawBattleScreen(const Player& player, const Monster& monster) const;
     void DrawSkillMenu(const Player& player) const;
 
-    // --- 인벤토리 UI ---
+    //인벤토리 창
     void DrawInventoryScreen(const Inventory& inv) const;
 
-    // --- 전투 연출 아스키아트 ---
+    //기본공격과 스킬공격
     void DrawAttackPunch() const;
     void DrawSkillSlash() const;
 
-    // --- 보상 연출 (경험치, 골드) ---
+    //골드 및 경험치
     void DrawExpGoldGain(int exp, int gold) const;
 
-    // --- 사망 연출 ---
+    //사망시 게임 종료
     void DrawGameOver() const;
 };

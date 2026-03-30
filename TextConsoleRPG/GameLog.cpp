@@ -2,6 +2,7 @@
 #include "GameLog.h" 
 #include "Player.h"
 #include "Monster/Monster.h" 
+#include "Monster/BossMonster.h"
 #include "Inventory.h"
 #include <cstdlib>
 
@@ -11,9 +12,25 @@ void GameLog::ClearScreen() const {
     system("cls"); // 콘솔 화면 초기화
 }
 
-// ==========================================
+//체력바 생성기
+std::string GameLog::MakeHPBar(int hp, int maxHp) const {
+    if (maxHp <= 0) return "[                    ]";
+    int barLength = 20;
+    int filled = (hp * barLength) / maxHp;
+    if (filled < 0) filled = 0;
+    if (filled > barLength) filled = barLength;
+
+    std::string bar = "[";
+    for (int i = 0; i < barLength; ++i) {
+        if (i < filled) bar += "#";
+        else bar += "-";
+    }
+    bar += "]";
+    return bar;
+}
+
 // 중요 이벤트 로그 (공격, 아이템, 골드 등)
-// ==========================================
+
 void GameLog::AddLog(const std::string& msg) {
     eventLogs.push_back(msg);
     if (eventLogs.size() > maxLogLines) {
@@ -51,9 +68,9 @@ void GameLog::DrawKillSummary() const {
     std::cin.get();
 }
 
-// ==========================================
+
 // 타이틀 및 플레이어 생성
-// ==========================================
+
 void GameLog::DrawTitleScreen() const {
     ClearScreen();
     std::cout << R"(
@@ -98,9 +115,9 @@ void GameLog::DrawPlayerCreated(const std::string& name) const {
     )" << '\n';
 }
 
-// ==========================================
+
 // ESC / 스탯창 출력 (특수문자 교체)
-// ==========================================
+
 void GameLog::DrawPlayerStatScreen(const Player& player) const {
     ClearScreen();
     std::cout << R"(
@@ -120,10 +137,13 @@ void GameLog::DrawPlayerStatScreen(const Player& player) const {
     std::cout << "  ========================================\n";
 }
 
-// ==========================================
+
 // 몬스터 아트 및 전투 화면
-// ==========================================
-void GameLog::DrawMonsterArt(const std::string& monsterName) const {
+
+
+void GameLog::DrawMonsterArt(const Monster& monster) const {
+    std::string monsterName = monster.GetName(); // 몬스터의 이름을 꺼냅니다.
+
     if (monsterName == "Slime") {
         std::cout << R"(
               요
@@ -155,40 +175,102 @@ void GameLog::DrawMonsterArt(const std::string& monsterName) const {
     }
     else if (monsterName == "Troll") {
         std::cout << R"(
-                 .----.
-              _.'__    `.
-          .--($)($$)---/#\
-        .' @          /###\
-        :         ,   #####
-         `-..__.-' _.-\###/
-        )" << '\n';
+             ,      ,
+            /(.-""-.)\
+        |\  \/      \/  /|
+        | \ / =.  .= \ / |
+        \( \   o\/o   / )/
+         \_,   /    \   ,_/
+           /   \__/   \
+           \,___/\___,/
+
+       )" << '\n';
     }
+
+    //보스 몬스터
+    else if (monsterName == "BossDragon") {
+        const BossMonster* boss = dynamic_cast<const BossMonster*>(&monster);
+        bool isPhase2 = (boss != nullptr && boss->IsPhaseTwo());
+
+        if (isPhase2) {
+            std::cout << R"( 
+            <>=======() 
+           (/\___   /|\\          ()==========<>_
+                 \_/ | \\        //|\   ______/ \)
+                   \_|  \\      // | \_/
+                     \|\/|\_   //  /\/
+                      (oo)\ \_//  /
+                     //_/\_\/ /  |
+                    @@/  |=\  \  |
+                         \_=\_ \ |
+                           \==\ |\_
+                         __(\===\(  )\
+                        (((~) __(_/   |
+                             (((~) \  /
+                             ______/ /
+                             '------'
+            )" << '\n';
+        }
+        else {
+            std::cout << R"(
+                    \||/
+                    |  @___oo
+          /\  /\   / (__,,,,|
+         ) /^\) ^\/ _)
+         )   /^\/   _)
+         )   _ /  / _)
+      /\  )/\/ ||  | )_)
+     <  >      |(,,) )__)
+      ||      /    \)___)\
+      | \____(      )___) )___
+       \______(_______;;; __;;;
+            )" << '\n';
+        }
+    }
+    // 다른 몬스터가 아닐 때 (기본값)
     else {
         std::cout << "\n       [ 미지의 기운이 느껴진다... ]\n\n";
     }
 }
 
+// 몬스터 조우 창
 void GameLog::DrawBattleScreen(const Player& player, const Monster& monster) const {
     ClearScreen();
-    std::cout << "  ========================================================\n";
-    std::cout << "   [ 야생의 " << monster.GetName() << " ]\n";
-    std::cout << "   HP: " << monster.GetHP() << " / " << monster.GetMaxHP()
-        << " | Atk: " << monster.GetAttack() << " | Def: " << monster.GetDefense() << "\n";
+    std::cout << "  +======================================================+\n";
 
-    DrawMonsterArt(monster.GetName());
+    // 보스 2페이즈 이름 연출
+    std::string displayName = monster.GetName();
+    const BossMonster* boss = dynamic_cast<const BossMonster*>(&monster);
+    if (boss != nullptr && boss->IsPhaseTwo()) {
+        displayName = "★각성한 " + displayName + "★";
+    }
 
-    std::cout << "  --------------------------------------------------------\n";
+    std::cout << "   [ 야생의 " << displayName << " ]\n";
+
+    //체력바 적용
+    std::cout << "   HP: " << MakeHPBar(monster.GetHP(), monster.GetMaxHP())
+        << " (" << monster.GetHP() << "/" << monster.GetMaxHP() << ")\n";
+    std::cout << "   Atk: " << monster.GetAttack() << " | Def: " << monster.GetDefense() << "\n";
+
+
+    DrawMonsterArt(monster);
+
+    std::cout << "  +------------------------------------------------------+\n";
     std::cout << "   [ " << player.GetName() << " ] Lv." << player.GetLevel() << "\n";
-    std::cout << "   HP: " << player.GetHP() << " / " << player.GetMaxHP()
-        << " | MP: " << player.GetMP() << " / " << player.GetMaxMP() << "\n";
-    std::cout << "  ========================================================\n";
+
+    //체력바 적용
+    std::cout << "   HP: " << MakeHPBar(player.GetHP(), player.GetMaxHP())
+        << " (" << player.GetHP() << "/" << player.GetMaxHP() << ")\n";
+    std::cout << "   MP: " << MakeHPBar(player.GetMP(), player.GetMaxMP())
+        << " (" << player.GetMP() << "/" << player.GetMaxMP() << ")\n";
+    std::cout << "  +======================================================+\n";
 
     for (size_t i = 0; i < eventLogs.size(); ++i) {
         std::cout << "   > " << eventLogs[i] << "\n";
     }
-    std::cout << "  ========================================================\n";
+    std::cout << "  +======================================================+\n";
 
-    // 전투 메뉴 (선택 창 - 특수문자 교체)
+  //전투 메뉴
     std::cout << R"(
    +=====================================================+
    |  1. 공격 (Attack)   |  2. 가방 (Inventory)          |
@@ -202,35 +284,28 @@ void GameLog::DrawSkillMenu(const Player& player) const {
     std::cout << "   0. 취소 (뒤로가기)\n";
 }
 
-// ==========================================
-// 전투 연출 아스키아트
-// ==========================================
+//전투 연출 아스키아트
 void GameLog::DrawAttackPunch() const {
     std::cout << R"(
-          _    _
-         (_)  (_)
-         | |  | |
-      ___| |__| |___
-     |___      ___  |
-         | |  | |
-         | |  | |
-         (_)  (_)
-      [ 강력한 펀치! ]
+
+           /| ________________
+     O|===|* >________________>
+           \| 
+      [ 공겨어어어억~! ]
     )" << '\n';
 }
 
 void GameLog::DrawSkillSlash() const {
     std::cout << R"(
-           /| ________________
-     O|===|* >________________>
-           \| 
+
+.---------------------------------------.
+      >>>>>----------[=====> 
+'---------------------------------------'
          [ 쾌속 베기!! ]
     )" << '\n';
 }
 
-// ==========================================
-// 인벤토리 창 (특수문자 교체)
-// ==========================================
+// 인벤토리 창
 void GameLog::DrawInventoryScreen(const Inventory& inv) const {
     ClearScreen();
     std::cout << R"(
@@ -253,9 +328,7 @@ void GameLog::DrawInventoryScreen(const Inventory& inv) const {
     std::cout << "   0. 닫기\n";
 }
 
-// ==========================================
 // 경험치 및 골드 획득 연출
-// ==========================================
 void GameLog::DrawExpGoldGain(int exp, int gold) const {
     std::cout << R"(
           /\                 /\
@@ -266,9 +339,7 @@ void GameLog::DrawExpGoldGain(int exp, int gold) const {
     std::cout << "   [ " << gold << " G ] 를 획득했습니다!\n";
 }
 
-// ==========================================
 // 게임 오버
-// ==========================================
 void GameLog::DrawGameOver() const {
     ClearScreen();
     std::cout << R"(
@@ -280,13 +351,8 @@ void GameLog::DrawGameOver() const {
         |   |_| ||       || ||_|| ||   |___ 
         |_______||_______||_|   |_||_______|
                 눈앞이 캄캄해졌다...
-                 (모험가 쓰러짐)
-                  _.-'-._
-               ,-'       `-.
-              /   _     _   \
-             |   (o)   (o)   |
-             \     ,-,-.     /
-              `-. (  |  ) ,-'
-                 `-._ _,-'
+                 
+         " You cannot give up just yet... "
+
     )" << "\n\n";
 }
