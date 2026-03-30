@@ -27,7 +27,6 @@ public:
 
     void SetName(std::string name);
     void SetJob(std::string job);
-    void SetExp(int exp);
     void SetLevel(int level);
     void SetHP(int hp);
     void SetDefense(int def);
@@ -37,9 +36,8 @@ public:
     void loseGold(int G);
     void Heal(int hp);
     void UseMp(int mp);
-    void RecoverMP(int amount);
-    void Levelup();
-    void PrintStatus();
+    void RecoverMP(int mp);
+
     void learnSkill(Skill* s) { skillList.push_back(s); }
     std::vector<Skill*>& getSkillList() { return skillList; }
 
@@ -63,9 +61,8 @@ private:
     int maxExp_;
     int def_;
     int gold_;
-    int maxExp_;
-    int def_;
-    int gold_;
+
+
 
     std::vector<Skill*> skillList;
 };

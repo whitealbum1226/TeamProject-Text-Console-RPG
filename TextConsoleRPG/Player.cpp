@@ -64,11 +64,23 @@ void Player::UseMp(int mp) { //마나를 사용할때
     }
 }
 
+void Player::RecoverMP(int mp) { //MP 채울때 
+    mp_ += mp;
+    if (mp_ > maxMp_)
+    {
+        mp_ = maxMp_;
+    }
+}
+
 void Player::loseGold(int G) {
     gold_ -= G;
     if (gold_ <= G) {
         gold_ = 0;
     }
+}
+
+bool Player::IsAlive() const { //살았는지 판단, 살았으면 True
+    return hp_ > 0;
 }
 
 void Player::Levelup() { // 레벨업
@@ -96,6 +108,25 @@ void Player::Levelup() { // 레벨업
             learnSkill(new Slash());
             std::cout << "스킬을 획득했습니다" << std::endl;
         }
+    }
+}
+
+void Player::PrintStatus() {
+    std::cout << "이름: " << name_ << std::endl;
+    std::cout << "직업: " << job_ << std::endl;
+    std::cout << "레벨: " << level_ << " / 최대 레벨: " << maxLevel_ << std::endl;
+    std::cout << "HP: " << hp_ << " / 최대 HP: " << maxHp_ << std::endl;
+    std::cout << "MP: " << mp_ << " / 최대 MP: " << maxMp_ << std::endl;
+    std::cout << "공격력: " << attack_ << std::endl;
+    std::cout << "방어력: " << def_ << std::endl;
+    std::cout << "EXP: " << exp_ << " / 최대 EXP: " << maxExp_ << std::endl;
+    std::cout << "골드: " << gold_ << std::endl;
+}
+
+void Player::TakeDamage(int takeDamage) {
+    hp_ -= takeDamage;
+    if (hp_ < 0) {
+        hp_ = 0;
     }
 }
 
