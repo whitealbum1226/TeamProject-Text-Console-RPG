@@ -3,7 +3,7 @@
 #include <string>
 
 RedPotion() : Item("빨간 포션") {}
-void ApplyEffect(Player& player) override
+void RedPotion::ApplyEffect(Player& player) override
 {
     if (count_ > 0)
     {
@@ -19,7 +19,7 @@ void ApplyEffect(Player& player) override
 };
 
 BluePotion() : Item("파란 포션") {}
-void ApplyEffect(Player& player) override
+void BluePotion::ApplyEffect(Player& player) override
 {
     if (count_ > 0)
     {
@@ -35,7 +35,7 @@ void ApplyEffect(Player& player) override
 };
 
 AttackPotion() : Item("공격의 영약") {}
-void ApplyEffect(Player& player) override
+void AttakcPotion::ApplyEffect(Player& player) override
 {
     if (count_ > 0)
     {
@@ -52,7 +52,7 @@ void ApplyEffect(Player& player) override
 };
 
 DefensePotion() : Item("방어의 영약") {}
-void ApplyEffect(Player& player) override
+void DefensePotion::ApplyEffect(Player& player) override
 {
     if (count_ > 0)
     {
