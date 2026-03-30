@@ -37,6 +37,9 @@
     <Filter Include="Skill\type">
       <UniqueIdentifier>{ddf096ed-d8db-4bcb-bdc1-023694fe7132}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Monster\Boss">
+      <UniqueIdentifier>{a0374fac-d9a1-4d92-90b9-af870c1de593}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -75,6 +78,15 @@
     <ClCompile Include="Slash.cpp">
       <Filter>Skill\type</Filter>
     </ClCompile>
+    <ClCompile Include="Store.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\BossMonster.cpp">
+      <Filter>Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\BossDragon.cpp">
+      <Filter>Monster\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -112,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="Slash.h">
       <Filter>Skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="Store.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\BossDragon.h">
+      <Filter>Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\BossMonster.h">
+      <Filter>Monster\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
