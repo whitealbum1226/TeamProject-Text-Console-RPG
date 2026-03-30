@@ -1,25 +1,23 @@
-﻿
-﻿#pragma once
+﻿// Inventory.h
+#pragma once
 #include <string>
 #include <iostream>
-#include "Player.h"
 
+class Player;
 
-//아이템 클래스 정의.
 class Item
 {
 public:
     std::string name;
-    Item(const std::string& name) : name(name) {};
-    virtual ~Item() {};
+    Item(const std::string& name) : name(name) {}
+    virtual ~Item() {}
 };
 
 class UsePotion
 {
-protected:
 public:
     virtual void ApplyEffect(Player& player) = 0;
-    virtual ~UsePotion() {};
+    virtual ~UsePotion() {}
 };
 
 class RedPotion : public Item, public UsePotion
@@ -45,7 +43,6 @@ class AttackPotion : public Item, public UsePotion
 public:
     AttackPotion() : Item("공격의 영약") {}
     void ApplyEffect(Player& player) override;
-
 private:
     size_t count = 3;
 };
@@ -59,7 +56,6 @@ private:
     size_t count = 3;
 };
 
-
 class Inventory
 {
 public:
@@ -67,5 +63,5 @@ public:
     size_t itemcount = 0;
 
     Inventory();
-    void AddItem();// 이건 나중에 전투에서 몬스터를 죽이고 아이템을 주웠을 때 실행 예정. 아직 미구현.
+    void AddItem();
 };

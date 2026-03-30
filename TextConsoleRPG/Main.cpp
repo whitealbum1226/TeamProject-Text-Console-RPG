@@ -8,7 +8,6 @@
 
 int main() {
 
-    system("chcp 65001>nul");
     // GameLog °´Ã¼ »ý¼º
     GameLog ui;
 
