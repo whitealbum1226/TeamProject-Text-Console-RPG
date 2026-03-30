@@ -1,5 +1,4 @@
-﻿
-﻿#pragma once
+﻿﻿#pragma once
 #include <string>
 #include <iostream>
 #include "Player.h"
@@ -7,8 +6,9 @@
 
 class Item
 {
-public:
+private:
     std::string name_;
+public:
     Item(const std::string& name) : name_(name) {};
     virtual ~Item() {};
 };
