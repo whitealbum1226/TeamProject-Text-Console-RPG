@@ -75,6 +75,16 @@ void Player::RecoverMP(int mp) { //MP 채울때
     }
 }
 
+void Player::IncreaseAttack(int attack) // 공격의 영약을 먹었을 때
+{
+    attack_ += attack;
+}
+
+void Player::IncreaseDefense(int defense) // 방어의 영약을 먹었을 때
+{
+    defense_ += defense;
+}
+
 void Player::loseGold(int G) {
     gold_ -= G;
     if (gold_ <= G) {

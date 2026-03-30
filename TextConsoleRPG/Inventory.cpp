@@ -9,8 +9,8 @@ void RedPotion::ApplyEffect(Player& player) override
     {
         count_--;
         std::cout << "빨간포션을 사용하셨습니다. (남은 갯수:" << count_ << ")" << std::endl;
-        player.hp_ += 50;
-        std::cout << "Hp가 50 회복되었습니다. 현재 Hp:" << player.hp_ << std::endl;
+        player.Heal(50);
+        std::cout << "Hp가 50 회복되었습니다. 현재 Hp:" << player.GetHP() << std::endl;
     }
     else
     {
@@ -25,8 +25,8 @@ void BluePotion::ApplyEffect(Player& player) override
     {
         count_--;
         std::cout << "파란 포션을 사용하셨습니다. (남은 갯수:" << count_ << ")" << std::endl;
-        player.mp_ += 50;
-        std::cout << "Mp가 50 회복되었습니다. 현재 Mp:" << player.mp_ << std::endl;
+        player.RecoverMp(50);
+        std::cout << "Mp가 50 회복되었습니다. 현재 Mp:" << player.GetMp() << std::endl;
     }
     else
     {
@@ -42,7 +42,7 @@ void AttakcPotion::ApplyEffect(Player& player) override
         count_--;
         std::cout << "공격의 영약을 사용하셨습니다. (남은 갯수:" << count_ << ")" << std::endl;
         player.attack_ += 5;
-        std::cout << "공격력이 5 상승했습니다. 현재 공격력:" << player.attack_ << std::endl;
+        std::cout << "공격력이 5 상승했습니다. 현재 공격력:" << GetAttack() << std::endl;
     }
     else
     {
@@ -59,7 +59,7 @@ void DefensePotion::ApplyEffect(Player& player) override
         count_--;
         std::cout << "방어의 영역을 사용하셨습니다. (남은 갯수:" << count_ << ")" << std::endl;
         player.def_ += 5;
-        std::cout << "방어력이 5 상승했습니다. 현재 방어력" << player.def_ << std::endl;
+        std::cout << "방어력이 5 상승했습니다. 현재 방어력" << GetDefense() << std::endl;
     }
     else
     {

@@ -37,6 +37,8 @@ public:
     void Heal(int hp);
     void UseMp(int mp);
     void RecoverMP(int mp);
+    void IncreaseAttack(int attack);
+    void IncreaseDefense(int defense);
 
     void learnSkill(Skill* s) { skillList.push_back(s); }
     std::vector<Skill*>& getSkillList() { return skillList; }
