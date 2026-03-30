@@ -5,12 +5,12 @@
 RedPotion() : Item("빨간 포션") {}
 void ApplyEffect(Player& player) override
 {
-    if (count > 0)
+    if (count_ > 0)
     {
-        count--;
-        std::cout << "빨간포션을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
-        player.Hp += 50;
-        std::cout << "Hp가 50 회복되었습니다. 현재 Hp:" << player.Hp << std::endl;
+        count_--;
+        std::cout << "빨간포션을 사용하셨습니다. (남은 갯수:" << count_ << ")" << std::endl;
+        player.hp_ += 50;
+        std::cout << "Hp가 50 회복되었습니다. 현재 Hp:" << player.hp_ << std::endl;
     }
     else
     {
@@ -21,12 +21,12 @@ void ApplyEffect(Player& player) override
 BluePotion() : Item("파란 포션") {}
 void ApplyEffect(Player& player) override
 {
-    if (count > 0)
+    if (count_ > 0)
     {
-        count--;
-        std::cout << "파란 포션을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
-        player.Mp += 50;
-        std::cout << "Mp가 50 회복되었습니다. 현재 Mp:" << player.Mp << std::endl;
+        count_--;
+        std::cout << "파란 포션을 사용하셨습니다. (남은 갯수:" << count_ << ")" << std::endl;
+        player.mp_ += 50;
+        std::cout << "Mp가 50 회복되었습니다. 현재 Mp:" << player.mp_ << std::endl;
     }
     else
     {
@@ -37,12 +37,12 @@ void ApplyEffect(Player& player) override
 AttackPotion() : Item("공격의 영약") {}
 void ApplyEffect(Player& player) override
 {
-    if (count > 0)
+    if (count_ > 0)
     {
-        count--;
-        std::cout << "공격의 영약을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
-        player.Attack += 5;
-        std::cout << "공격력이 5 상승했습니다. 현재 공격력:" << player.Attack << std::endl;
+        count_--;
+        std::cout << "공격의 영약을 사용하셨습니다. (남은 갯수:" << count_ << ")" << std::endl;
+        player.attack_ += 5;
+        std::cout << "공격력이 5 상승했습니다. 현재 공격력:" << player.attack_ << std::endl;
     }
     else
     {
@@ -54,12 +54,12 @@ void ApplyEffect(Player& player) override
 DefensePotion() : Item("방어의 영약") {}
 void ApplyEffect(Player& player) override
 {
-    if (count > 0)
+    if (count_ > 0)
     {
-        count--;
-        std::cout << "방어의 영역을 사용하셨습니다. (남은 갯수:" << count << ")" << std::endl;
-        player.Defense += 5;
-        std::cout << "방어력이 5 상승했습니다. 현재 방어력" << player.Defense << std::endl;
+        count_--;
+        std::cout << "방어의 영역을 사용하셨습니다. (남은 갯수:" << count_ << ")" << std::endl;
+        player.def_ += 5;
+        std::cout << "방어력이 5 상승했습니다. 현재 방어력" << player.def_ << std::endl;
     }
     else
     {
