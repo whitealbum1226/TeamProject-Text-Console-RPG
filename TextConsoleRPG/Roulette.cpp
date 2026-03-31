@@ -66,5 +66,10 @@ bool Roulette::useSkill(Player& p, Monster& m)
 
 void Roulette::ShowDetail()
 {
-
+    std::cout << "\n========================================" << std::endl;
+    std::cout << " [스킬명] " << name << " (소모 MP: " << mpConsume << ")" << std::endl;
+    std::cout << " [설  명] 운명의 룰렛을 돌려 다양한 효과를 발동한다." << std::endl;
+    std::cout << "          1. (40% 확률) 일반 공격 2. (20% 확률) 2배 데미지 공격 3. (10% 확률) 플레이어 HP 전체 회복 4. (10% 확률) 플레이어 MP 전체 회복" << std::endl;
+    std::cout << "          5. (8% 확률) 플레이어 현재 체력 절반 감소 6. (8% 확률) 적 현재 체력 50% 감소 7. (2% 확률) 플레이어 즉사 8. (2% 확률) 적 즉사" << std::endl;
+    std::cout << "========================================" << std::endl;
 }

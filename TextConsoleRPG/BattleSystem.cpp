@@ -70,7 +70,39 @@ void BattleSystem::NextTurn()
                 }
                 else if (skillMenu == 2) // 스킬 설명
                 { 
-                    // 스킬 설명 창 구현 예정
+                    while (true)
+                    {
+                        std::cout << "\n========================================" << std::endl;
+                        std::cout << "            [  스킬 도감  ]          " << std::endl;
+                        std::cout << "========================================" << std::endl;
+
+                        if (skills.empty()) {
+                            std::cout << "배운 스킬이 없습니다!" << std::endl;
+                            continue;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < (int)skills.size(); ++i)
+                            {
+                                std::cout << i + 1 << ". " << skills[i]->getName() << std::endl;
+                            }
+                            std::cout << "0. 돌아가기" << std::endl;
+                        }
+
+                        int dictChoice;
+                        std::cin >> dictChoice;
+
+                        if (dictChoice == 0) break; // 도감 종료
+
+                        if (dictChoice > 0 && dictChoice <= (int)skills.size()) // 스킬 설명
+                        {
+                            skills[dictChoice - 1]->ShowDetail();
+                        }
+                        else
+                        {
+                            std::cout << "잘못된 번호입니다. 다시 입력해주세요." << std::endl;
+                        }
+                    }
                 }
             }
             continue;
