@@ -183,6 +183,8 @@ void BattleSystem::BattleStart()
 
     while (player->GetHP() > 0 && monster->GetHP() > 0)
     {
+        NextTurn();
+
         int AttackRandom = rand() % 100; // 플레이어 몬스터 공격 순서 랜덤 (이후 특정 조건으로 확률 변경 가능)
 
         if (AttackRandom < 50 || player->GetQuickAttack() == true) // 플레이어 선공 (신속 스킬 사용 시 선공 구현)
