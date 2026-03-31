@@ -167,7 +167,7 @@
     <ClInclude Include="GameLog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="boom.h">
+    <ClInclude Include="Boom.h">
       <Filter>Skill\type\Header</Filter>
     </ClInclude>
     <ClInclude Include="HealSkill.h">

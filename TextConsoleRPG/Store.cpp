@@ -141,7 +141,7 @@ void Store::Open(Player& player, Inventory& inventory)
         if (std::cin.fail())
         {
             std::cin.clear();
-            std::cin.ignore(10000, '\n');
+            std::cin.ignore(1000, '\n');
             continue;
         }
 
@@ -191,9 +191,9 @@ void Store::Open(Player& player, Inventory& inventory)
             std::cout << "잘못된 입력입니다.\n";
             PrintBorder();
 
-            int temp;
+            int temp2;
             std::cout << "아무 숫자나 입력하면 돌아갑니다 : ";
-            std::cin >> temp;
+            std::cin >> temp2;
             break;
         }
     }
@@ -209,9 +209,10 @@ void Store::BuyItem(Player& player, Inventory& inventory)
         std::cin >> choice;
 
         if (std::cin.fail())
+            // 입력 실패 시 처리
         {
             std::cin.clear();
-            std::cin.ignore(10000, '\n');
+            std::cin.ignore(1000, '\n');
             continue;
         }
 
@@ -294,7 +295,7 @@ void Store::SellItem(Player& player, Inventory& inventory)
         if (std::cin.fail())
         {
             std::cin.clear();
-            std::cin.ignore(10000, '\n');
+            std::cin.ignore(1000, '\n');
             continue;
         }
 

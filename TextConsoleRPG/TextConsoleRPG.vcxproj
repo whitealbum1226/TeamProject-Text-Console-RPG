@@ -150,7 +150,7 @@
   <ItemGroup>
     <ClInclude Include="BattleSystem.h" />
     <ClInclude Include="Blood.h" />
-    <ClInclude Include="boom.h" />
+    <ClInclude Include="Boom.h" />
     <ClInclude Include="GameLog.h" />
     <ClInclude Include="HealSkill.h" />
     <ClInclude Include="Inventory.h" />
