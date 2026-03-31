@@ -4,6 +4,7 @@
 
 class Player;
 class Monster;
+class Blood;
 
 class BattleSystem
 {

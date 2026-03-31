@@ -4,7 +4,9 @@
 #include "Monster/Monster.h" 
 #include "Monster/BossMonster.h"
 #include "Inventory.h"
+#include "Skill.h"
 #include <cstdlib>
+
 
 GameLog::GameLog(size_t maxLines) : maxLogLines(maxLines) {}
 
@@ -15,23 +17,50 @@ void GameLog::ClearScreen() const {
     system("clear");
 #endif
 }
+//-------------------------------------------------------
 
 // 체력바 생성기
-std::string GameLog::MakeHPBar(int hp, int maxHp) const {
-    if (maxHp <= 0) return "[                    ]";
-    int barLength = 20;
-    int filled = (hp * barLength) / maxHp;
-    if (filled < 0) filled = 0;
-    if (filled > barLength) filled = barLength;
+std::string GameLog::MakeBar(int current, int max, char fillChar) const
+{
+    //최대 hp0이하 상황 방어
+    if (max <= 0) return "[------------]";
 
+    int displayCurrent = current;
+
+    //테스트해보니 최대체력이 현제 최대체력보다 높게 나오는 부분이 있음. 그 부분을 수정함
+    if (displayCurrent > max)
+    {
+        displayCurrent = max;
+    }
+    //체력이 -로 보이는 상황을 방지
+    if (displayCurrent < 0)
+    {
+        displayCurrent = 0;
+    }
+
+    int barLength = 20;
+    int filled = (displayCurrent * barLength) / max;
+
+    //기호를 이용한 체력바
     std::string bar = "[";
-    for (int i = 0; i < barLength; ++i) {
-        if (i < filled) bar += "#";
-        else bar += "-";
+    for (int i = 0; i < barLength; i++)
+    {
+        if (i < filled)
+        {
+            bar += fillChar;
+        }
+        else
+        {
+            bar += "-";
+        }
     }
     bar += "]";
+
     return bar;
 }
+
+
+//------------------------------------------------
 
 // 중요 이벤트 로그
 void GameLog::AddLog(const std::string& msg) {
@@ -111,10 +140,18 @@ void GameLog::SetupCharacter(Player* player) const {
         ClearScreen();
         std::cout << "\n  모험가 [ " << player->GetName() << " ]님, 어서오세요.\n";
         std::cout << R"(
-                 ,
-                /| ________________
-          O|===|* >________________>
-                \|
+
+     .　　 ∧＿∧
+ 　　    (  ˘ω˘)　　п
+ 　     п`)　　⌒＼/(∃
+ 　    Е)//＼　　＼_/
+       ＼/　 ＼　　 丶
+    　　　　 ／　y　 ﾉ
+ 　   　　 ／　／　／
+ 　　　   (　 (　〈
+ 　　　   ＼　＼　＼
+ 　　　  （_＿(＿＿）
+
         )" << '\n';
         std::cout << "  ======================================================\n";
         std::cout << "    [1] 스탯창 확인   |   [0] 모험 시작\n";
@@ -255,20 +292,23 @@ void GameLog::DrawBattleScreen(const Player& player, const Monster& monster) con
     std::string displayName = monster.GetName();
     const BossMonster* boss = dynamic_cast<const BossMonster*>(&monster);
     if (boss != nullptr && boss->IsPhaseTwo()) {
-        displayName = "★각성한 " + displayName + "★";
+        displayName = " 분노한 " + displayName;
     }
 
+    //노멀 몬스터
+
     std::cout << "  [ 야생의 " << displayName << " ]\n";
-    std::cout << "  HP: " << MakeHPBar(monster.GetHP(), monster.GetMaxHP())
+    std::cout << "  HP: " << MakeBar(monster.GetHP(), monster.GetMaxHP(), '#')
         << " (" << monster.GetHP() << "/" << monster.GetMaxHP() << ")\n";
 
     DrawMonsterArt(monster);
 
+    //플레이어 스탯창
     std::cout << "------------------------------------------------------------\n";
     std::cout << "  [ " << player.GetName() << " ] Lv." << player.GetLevel() << "\n";
-    std::cout << "  HP: " << MakeHPBar(player.GetHP(), player.GetMaxHP())
+    std::cout << "  HP: " << MakeBar(player.GetHP(), player.GetMaxHP(), '#')
         << " (" << player.GetHP() << "/" << player.GetMaxHP() << ")\n";
-    std::cout << "  MP: " << MakeHPBar(player.GetMP(), player.GetMaxMP())
+    std::cout << "  MP: " << MakeBar(player.GetMP(), player.GetMaxMP(), '*')
         << " (" << player.GetMP() << "/" << player.GetMaxMP() << ")\n";
     std::cout << "============================================================\n";
 
@@ -277,54 +317,127 @@ void GameLog::DrawBattleScreen(const Player& player, const Monster& monster) con
         std::cout << "  > " << eventLogs[i] << "\n";
     }
 
-    for (size_t i = eventLogs.size(); i < maxLogLines; ++i) {
-        std::cout << "\n";
-    }
-    std::cout << "============================================================\n";
+    for (size_t i = 0; i < eventLogs.size(); ++i) std::cout << "   > " << eventLogs[i] << "\n";
+    std::cout << "  +======================================================+\n";
 
-    std::cout << " [1] 일반 공격     [2] 인벤토리     [3] 스킬     [0] 도망\n";
-    std::cout << " 선택 >> ";
+    std::cout << R"(
+   +=====================================================+
+   |  1. 공격 (Attack)   |  2. 가방 (Inventory)          |
+   |  3. 스킬 (Skill)    |  0. 도망 (Run)                |
+   +=====================================================+
+    )" << '\n';
 }
+
+//----------------------------------------------------------------------------------------------
 
 // 스킬 목록 화면
 void GameLog::DrawSkillMenu(const Player& player) const {
-    std::cout << "\n   [ 스킬 목록 ]\n";
-    // BattleSystem에서 실제 스킬 목록 출력
-    std::cout << "   0. 취소 (뒤로가기)\n";
-    std::cout << "   선택 >> ";
+    std::cout << R"(
+   +=====================================================+
+   |                 [  S K I L L S  ]                   |
+   +=====================================================+
+   |  1. 슬래시 (20 MP) - 무기를 휘둘러 강한 피해        |
+   |  2. 신속 (10 MP) - 무조건 선제 공격을 가합니다.     |
+   |  3. 회복 (20 MP) - 자신의 HP를 50 회복합니다.       |
+   |  4. 출혈 (30 MP) - 3턴간 적에게 30 지속 데미지      |
+   |  5. 폭발 (50 MP) - 내 HP 50 소모, 공격력 4배 피해   |
+   |  6. 마나 익스플로전 (ALL) - 모든 MP 소모, x3 피해   |
+   |  7. 운명의 룰렛 (50 MP) - 무작위 효과 (도박 스킬!)  |
+   +-----------------------------------------------------+
+   |  0. 취소 (뒤로가기)                                 |
+   +=====================================================+
+    )" << '\n';
 }
+
 
 // 기본공격 및 스킬공격 연출 (_getch 대체 적용)
 void GameLog::DrawAttackPunch() const {
-    ClearScreen();
-    std::cout << "\n\n";
     std::cout << R"(
-             />_________________________________
-        O===[><_   (챙강!)                      >
-             \>"""""""""""""""""""""""""""""""""
+           /| ________________
+     O|===|* >________________>
+           \| 
+      [ 공겨어어어억~! ]
     )" << '\n';
-    std::cout << "\n  날카로운 검으로 적을 공격합니다!\n";
-
-    std::string dummy;
-    std::cout << "\n  (계속하려면 아무 글자나 입력하고 엔터) >> ";
-    std::cin >> dummy;
 }
 
 void GameLog::DrawSkillSlash() const {
-    ClearScreen();
-    std::cout << "\n\n";
     std::cout << R"(
-            //
-           //    (샤아악!)
-          //
-         //
+.---------------------------------------.
+      >>>>>----------[=====> 
+'---------------------------------------'
+         [ 슬래시! ]
     )" << '\n';
-    std::cout << "\n  강력한 검기를 날립니다!\n";
-
-    std::string dummy;
-    std::cout << "\n  (계속하려면 아무 글자나 입력하고 엔터) >> ";
-    std::cin >> dummy;
 }
+
+void GameLog::DrawSkillQuick() const {
+    std::cout << R"(
+       >>>      >>>       >>>
+          >>>      >>>
+            [ 신속! ]
+    )" << '\n';
+}
+
+void GameLog::DrawSkillHeal() const {
+    std::cout << R"(
+             +
+           + ✚ +   
+             +
+      [ 상처를 치료합니다 ]
+    )" << '\n';
+}
+
+void GameLog::DrawSkillBlood() const {
+    std::cout << R"(
+            \ \ \
+             \ \ \  
+              \ \ \
+           [ 출혈! ]
+    )" << '\n';
+}
+
+void GameLog::DrawSkillBoom() const {
+    std::cout << R"(
+             \ | /
+           - (BOOM) -  
+             / | \
+          [ 폭발한다! ]
+    )" << '\n';
+}
+
+void GameLog::DrawSkillManaBurn() const {
+    std::cout << R"(
+            .✦  * ✦.
+           * ✧ ✦ ✧  * '✦  * ✦'
+               ✦ *' ✦ ✧
+      [ 모든 마나를 쥐어짜내 폭발시킵니다! ]
+    )" << '\n';
+}
+
+void GameLog::DrawSkillRoulette() const {
+    std::cout << R"(
+             .-------.
+            / 7 | ? \
+           |----+----|  
+            \ ? | 7 /
+             '-------'
+       [ " 이건 운명이야! " ]
+    )" << '\n';
+}
+
+// ★ 신규: 8번 연속 공격 아스키아트 ★
+void GameLog::DrawSkillMultiStrike() const {
+    std::cout << R"(
+       \  /    \  /    \  /
+        \/      \/      \/
+        /\      /\      /\
+       /  \    /  \    /  \
+      [ 연속 공격! ]
+    )" << '\n';
+}
+//-----------------------------------------------------------------------
+
+//보스몬스터 스킬
+
 
 // 인벤토리 창
 void GameLog::DrawInventoryScreen(const Inventory& inv) const {
@@ -350,7 +463,9 @@ void GameLog::DrawInventoryScreen(const Inventory& inv) const {
     std::cout << "   선택 >> ";
 }
 
-// 경험치 및 골드 획득 연출 (_getch 대체 적용)
+//-----------------------------------------------------------------------
+
+// 경험치 및 골드 획득 연출
 void GameLog::DrawExpGoldGain(int exp, int gold) const {
     std::cout << "\n";
     std::cout << R"(
@@ -376,7 +491,7 @@ void GameLog::DrawExpGoldGain(int exp, int gold) const {
     std::cin >> dummy;
 }
 
-// 아이템 드롭 연출 (_getch 대체 적용)
+// 아이템 드롭 연출
 void GameLog::DrawItemDrop(const std::string& itemName) const {
     std::cout << R"(
          /\
@@ -390,6 +505,7 @@ void GameLog::DrawItemDrop(const std::string& itemName) const {
     std::cout << "\n  (계속하려면 아무 글자나 입력하고 엔터) >> ";
     std::cin >> dummy;
 }
+//--------------------------------------------------------------------------------------------
 
 // 상점 메뉴 및 UI
 int GameLog::ShowShopPrompt() const {
@@ -419,6 +535,8 @@ void GameLog::DrawShopUI() const {
 선택 >> )";
 }
 
+//---------------------------------------------------------------------------------------
+
 // 게임 오버
 void GameLog::DrawGameOver() const {
     ClearScreen();
@@ -433,10 +551,57 @@ void GameLog::DrawGameOver() const {
 ============================================================
 )" << "\n";
     std::cout << R"(
-                  (x_x)  <- 쓰러진 모험가...
-                 /| | \
-                 /   \
+
     )" << "\n";
 
     DrawKillSummary();
+
+
+}
+
+//보스본스터 연출
+void GameLog::DrawBossAttackEffect(const std::string& attackName) const {
+    ClearScreen();
+    std::cout << "\n\n\n\n";
+    if (attackName.find("브레스") != std::string::npos) {
+        std::cout << R"(
+             (  .            )
+           )           .
+         .         (        )
+            (  🔥  🔥  🔥  )
+           ( 🔥 💥 💥 🔥 )
+            (  🔥  🔥  🔥  )
+        )" << "\n";
+    }
+    else if (attackName.find("포효") != std::string::npos) {
+        std::cout << R"(
+             (((         )))
+           (((   크아앙!   )))
+             (((         )))
+          ⚡ 🔊 ⚡ 🔊 ⚡ 🔊 ⚡
+        )" << "\n";
+    }
+    else {
+        std::cout << R"(
+             __
+            / /
+           / /
+          / /  💥 콰직-!!!
+         / / 
+        /_/
+        )" << "\n";
+    }
+    std::cout << "\n      [ " << attackName << " ] 공격이 쏟아집니다!!\n\n";
+}
+
+//스킬 고유설명
+void GameLog::DrawSkillDetail(Skill* skill) const {
+    ClearScreen();
+    std::cout << "============================================================\n";
+    std::cout << "                [ 스 킬 상 세 정 보 ]\n";
+    skill->ShowDetail();
+    std::cout << "============================================================\n";
+    std::cout << "  1. 사용하기          2. 스킬창으로 돌아가기\n";
+    std::cout << "============================================================\n";
+    std::cout << " 선택 >> ";
 }
