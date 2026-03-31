@@ -10,6 +10,7 @@ class Player
 {
 public:
     Player(const std::string& name);
+    ~Player();
 
     std::string GetName() const;
     std::string GetJob() const;
