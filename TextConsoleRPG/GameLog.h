@@ -3,12 +3,12 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "Skill.h"
+
 
 class Player;
 class Monster;
 class Inventory;
-
+class Skill;
 
 //클래스 전방선언
 
