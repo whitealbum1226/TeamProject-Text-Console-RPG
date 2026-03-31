@@ -28,7 +28,10 @@ Player::Player(const std::string& name)
     def_(20),          // 방어력
     maxExp_(100), // 최대 Exp
     exp_(0),      // 현재 Exp
-    gold_(100) {} //현재 골드
+    gold_(100)  //현재 골드
+{
+    learnSkill(new Slash()); // 시작 스킬
+} 
 
 std::string Player::GetName() const {return name_;}
 std::string Player::GetJob() const { return job_; }
@@ -118,9 +121,8 @@ void Player::Levelup() { // 레벨업
 
         if (level_ == 3) // 레벨 3 달성 시 스킬 해금
         {
-            learnSkill(new Slash());
             learnSkill(new Blood());
-            std::cout << "신규 스킬(슬래시, 출혈)을 획득했습니다" << std::endl;
+            std::cout << "신규 스킬(출혈)을 획득했습니다" << std::endl;
         }
 
         if (level_ == 5) // 레벨 5 달성 시 스킬 해금

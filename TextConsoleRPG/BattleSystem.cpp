@@ -154,14 +154,15 @@ void BattleSystem::PlayerWin()
 
 void BattleSystem::PlayerAttack()
 {
-    std::cout << player->GetName() << "의 " << turn << "번째 턴" << std::endl;
+    std::cout << "\n" << player->GetName() << "의 " << turn << "번째 턴" << std::endl;
     monster->TakeDamage(player->GetAttack());
 
-    std::cout << "\n" << monster->GetName() << "의 HP : " << monster->GetHP() << std::endl;
+    std::cout << player->GetAttack() << "를 입힙니다" << std::endl;
+    std::cout << monster->GetName() << "의 HP : " << monster->GetHP() << std::endl;
 }
 
 void BattleSystem::MonsterAttack() {
-    std::cout << monster->GetName() << "의 " << turn << "번째 턴" << std::endl;
+    std::cout << "\n" << monster->GetName() << "의 " << turn << "번째 턴" << std::endl;
     player->TakeDamage(monster->GetAttack());
     if (blood != nullptr && blood->GetBloodCount() > 0) // 출혈 스킬이 있고 카운트가 0보다 클 경우
     {
@@ -169,7 +170,8 @@ void BattleSystem::MonsterAttack() {
         blood->SetBloodCount(blood->GetBloodCount() - 1);
     }
 
-    std::cout << "\n플레이어의 HP: " << player->GetHP() << std::endl;
+    std::cout << monster->GetAttack() << "만큼의 데미지를 입었습니다" << std::endl;
+    std::cout << "플레이어의 HP: " << player->GetHP() << std::endl;
 }
 void BattleSystem::BattleStart()
 {
@@ -189,11 +191,11 @@ void BattleSystem::BattleStart()
 
     if (MonsterRandom < 50) // 임시로 50%로 구현 이후 특정 조건에 새로운 몬스터 출현하도록 구현
     {
-        monster = new Slime(10); // 임시로 레벨 넣었습니다
+        monster = new Slime(5); // 임시로 레벨 넣었습니다
     }
     else if (MonsterRandom < 100)
     {
-        monster = new Goblin(15);
+        monster = new Goblin(8);
     }
 
     BattleReady(); // 몬스터 생성 후 정보 출력
