@@ -57,50 +57,63 @@ void BattleSystem::NextTurn()
                 int skillMenu;
                 std::cin >> skillMenu;
 
-                if (skillMenu == 0) break;
+                if (skillMenu == 0) break; // 스킬 메뉴 탈출 -> 1.공격/2.인벤토리 메뉴로
 
-                if (skillMenu == 1) { // 기존 사용 로직
+                if (skillMenu == 1) { // 스킬 사용 
                     std::cout << "\n[ 사용 가능한 스킬 ]" << std::endl;
                     for (int i = 0; i < (int)skills.size(); ++i)
                     {
                         std::cout << i + 1 << ". " << skills[i]->getName() << " (MP: " << skills[i]->getMpConsume() << ")" << std::endl;
                     }
 
-                    return;
+                    int useChoice;
+                    std::cout << "번호 입력 (0.취소): ";
+                    std::cin >> useChoice;
+
+                    if (useChoice <= 0 || useChoice > (int)skills.size()) continue;
+
+                    Skill* selectedSkill = skills[useChoice - 1];
+
+                    if (player->GetMP() >= selectedSkill->getMpConsume())
+                    {
+
+                        if (selectedSkill->useSkill(*player, *monster)) {
+                            player->UseMp(selectedSkill->getMpConsume());
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        std::cout << "마나가 부족합니다! (현재 MP: " << player->GetMP() << ")" << std::endl;
+                    }
+                    continue;
                 }
-                else if (skillMenu == 2) // 스킬 설명
-                { 
+                else if (skillMenu == 2)
+                {
                     while (true)
                     {
                         std::cout << "\n========================================" << std::endl;
-                        std::cout << "            [  스킬 도감  ]          " << std::endl;
+                        std::cout << "            [   스킬 도감   ]          " << std::endl;
                         std::cout << "========================================" << std::endl;
 
-                        if (skills.empty()) {
-                            std::cout << "배운 스킬이 없습니다!" << std::endl;
-                            continue;
+                        for (int i = 0; i < (int)skills.size(); ++i) {
+                            std::cout << i + 1 << ". " << skills[i]->getName() << std::endl;
                         }
-                        else
-                        {
-                            for (int i = 0; i < (int)skills.size(); ++i)
-                            {
-                                std::cout << i + 1 << ". " << skills[i]->getName() << std::endl;
-                            }
-                            std::cout << "0. 돌아가기" << std::endl;
-                        }
+                        std::cout << "0. 돌아가기" << std::endl;
+                        std::cout << "선택: ";
 
                         int dictChoice;
                         std::cin >> dictChoice;
 
-                        if (dictChoice == 0) break; // 도감 종료
+                        if (dictChoice == 0) break; // 스킬 메뉴(사용/설명)로 이동
 
-                        if (dictChoice > 0 && dictChoice <= (int)skills.size()) // 스킬 설명
-                        {
+                        if (dictChoice > 0 && dictChoice <= (int)skills.size()) {
+                            // 네가 Skill.h에 만든 ShowDetail() 호출
                             skills[dictChoice - 1]->ShowDetail();
                         }
                         else
                         {
-                            std::cout << "잘못된 번호입니다. 다시 입력해주세요." << std::endl;
+                            std::cout << "잘못된 번호입니다." << std::endl;
                         }
                     }
                 }
@@ -143,6 +156,8 @@ void BattleSystem::PlayerAttack()
 {
     std::cout << player->GetName() << "의 " << turn << "번째 턴" << std::endl;
     monster->TakeDamage(player->GetAttack());
+
+    std::cout << "현재 플레이어의 HP: " << monster->GetHP() << std::endl;
 }
 
 void BattleSystem::MonsterAttack() {
@@ -153,6 +168,8 @@ void BattleSystem::MonsterAttack() {
         monster->TakeDamage(blood->GetBloodDamage());
         blood->SetBloodCount(blood->GetBloodCount() - 1);
     }
+
+    std::cout << "현재 플레이어의 HP: " << player->GetHP() << std::endl;
 }
 void BattleSystem::BattleStart()
 {
