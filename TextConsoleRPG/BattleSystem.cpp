@@ -209,6 +209,7 @@ void BattleSystem::BattleStart()
         if (AttackRandom < 50 || player->GetQuickAttack() == true) // 플레이어 선공 (신속 스킬 사용 시 선공 구현)
         {
             player->SetQuickAttack(false);
+            std::cout << player->GetName() << "의 선공."  << std::endl;
             PlayerAttack();
             if (monster->GetHP() <= 0)
             {
@@ -220,21 +221,23 @@ void BattleSystem::BattleStart()
             MonsterAttack();
             if (player->GetHP() <= 0)
             {
-                std::cout << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
+                std::cout << "\n" << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
                 break;
             }
         }
         else // 몬스터 선공
         {
+            std::cout << monster->GetName() << "의 선공." << std::endl;
+
             MonsterAttack();
             if (player->GetHP() <= 0)
             {
-                std::cout << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
+                std::cout << "\n" << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
                 break;
             }
             if (monster->GetHP() <= 0) // 몬스터가 출혈로 죽었을 경우를 대비
             {
-                std::cout << monster->GetName() << "을(를) 처치했습니다." << std::endl;
+                std::cout << "\n" << monster->GetName() << "을(를) 처치했습니다." << std::endl;
                 PlayerWin();
                 break;
             }
@@ -242,7 +245,7 @@ void BattleSystem::BattleStart()
             PlayerAttack();
             if (monster->GetHP() <= 0)
             {
-                std::cout << monster->GetName() << "을(를) 처치했습니다." << std::endl;
+                std::cout << "\n" << monster->GetName() << "을(를) 처치했습니다." << std::endl;
                 PlayerWin();
                 break; 
             }

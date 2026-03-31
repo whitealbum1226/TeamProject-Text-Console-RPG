@@ -29,7 +29,8 @@ bool HealSkill::useSkill(Player& p, Monster& m)
         }
 
         p.Heal(healAmount);
-        std::cout << name << "을(를) 사용합니다! (+" << healAmount << " HP)" << std::endl;
+        std::cout << "\n" << name << "을(를) 사용합니다! (+" << healAmount << " HP)" << std::endl;
+        std::cout << "MP: " << p.GetMP() + mpConsume << "→" << p.GetMP() << std::endl;
     }
 
     return true;
