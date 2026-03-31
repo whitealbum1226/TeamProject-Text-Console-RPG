@@ -8,12 +8,6 @@
 Monster::Monster(const std::string& name, int playerLevel)
     : name_(name), hp_(0), maxHp_(0), attack_(0), defense_(0)
 {
-    static bool randInitialized = false;
-    if (!randInitialized) // rand 초기화
-    {
-        srand(static_cast<unsigned int>(time(nullptr)));
-        randInitialized = true;
-    }
     // 플레이어 레벨 값에 따른 랜덤 스텟
     // Hp 와 MaxHp
     int minHp = playerLevel * 20;

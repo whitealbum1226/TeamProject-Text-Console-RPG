@@ -29,7 +29,7 @@ private:
 
     void ClearScreen() const;
     void PrintBorder() const;
-    void PrintTitle(const std::string& title) const;
+    void PrintMainString(const std::string& title) const;
     void PrintPlayerInfo(const Player& player) const;
 
     void PrintMainMenu(const Player& player) const;

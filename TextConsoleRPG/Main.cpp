@@ -55,7 +55,7 @@ int main()
         if (std::cin.fail())
         {
             std::cin.clear();
-            std::cin.ignore(256, '\n');
+            std::cin.ignore(100, '\n');
             std::cout << "잘못된 입력입니다.\n";
             continue;
         }
@@ -128,7 +128,7 @@ int main()
             if (std::cin.fail())
             {
                 std::cin.clear();
-                std::cin.ignore(256, '\n');
+                std::cin.ignore(100, '\n');
                 std::cout << "잘못된 입력입니다.\n";
                 break;
             }
