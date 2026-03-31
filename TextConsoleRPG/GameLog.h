@@ -4,9 +4,13 @@
 #include <vector>
 #include <iostream>
 
+
 class Player;
-class Monster; // 몬스터 클래스 전방 선언
+class Monster;
 class Inventory;
+class Skill;
+
+//클래스 전방선언
 
 struct KillRecord {
     std::string name;
@@ -21,7 +25,7 @@ private:
     size_t maxLogLines;
 
     void DrawMonsterArt(const Monster& monster) const;
-    std::string MakeHPBar(int hp, int maxHp) const; // 체력바 생성
+    std::string MakeBar(int current, int max, char fillChar) const; // 체력및마나
 
 public:
     GameLog(size_t maxLines = 6);
@@ -49,9 +53,18 @@ public:
     //인벤토리 창
     void DrawInventoryScreen(const Inventory& inv) const;
 
-    //기본공격(검)과 스킬공격(검기) 연출
+    //기본공격과 스킬들
     void DrawAttackPunch() const;
     void DrawSkillSlash() const;
+
+    //[새로 추가한 스킬 Ui 함수들]
+    void DrawSkillQuick() const;
+    void DrawSkillHeal() const;
+    void DrawSkillBlood() const;
+    void DrawSkillBoom() const;
+    void DrawSkillManaBurn() const;
+    void DrawSkillRoulette() const;
+    void DrawSkillMultiStrike() const;
 
     //골드 및 경험치 획득 연출
     void DrawExpGoldGain(int exp, int gold) const;
@@ -65,4 +78,10 @@ public:
 
     //사망시 게임 종료 및 통계
     void DrawGameOver() const;
+
+   //보스공격
+    void DrawBossAttackEffect(const std::string& attackName) const;
+
+    //스킬 상세설명ui
+    void DrawSkillDetail(Skill* skill) const;
 };

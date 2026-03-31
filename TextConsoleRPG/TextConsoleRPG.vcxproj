@@ -126,6 +126,7 @@
     <ClCompile Include="BattleSystem.cpp" />
     <ClCompile Include="Blood.cpp" />
     <ClCompile Include="Boom.cpp" />
+    <ClCompile Include="GameLog.cpp" />
     <ClCompile Include="HealSkill.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Main.cpp" />

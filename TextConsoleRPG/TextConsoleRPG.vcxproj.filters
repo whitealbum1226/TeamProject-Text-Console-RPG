@@ -114,6 +114,9 @@
     <ClCompile Include="Roulette.cpp">
       <Filter>Skill\type\Source</Filter>
     </ClCompile>
+    <ClCompile Include="GameLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
