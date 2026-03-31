@@ -4,22 +4,30 @@
 
 class Player;
 class Monster;
+class GameLog;
+class Inventory;
 class Blood;
+class Skill;
 
 class BattleSystem
 {
 private:
     Player* player;
     Monster* monster;
-    int turn = 1;
+    GameLog* logSystem;
+    Inventory* inventory;
     Blood* blood;
+    int turn = 1;
+    
+    bool ExecuteSkill(Skill* selectedSkill);
+
 
 public:
-    BattleSystem(Player* p, Monster* m);
+    BattleSystem(Player* p, Monster* m, GameLog* lg, Inventory* inv);
 
     void BattleReady();
 
-    void NextTurn();
+    bool NextTurn();
 
     void PlayerWin();
 

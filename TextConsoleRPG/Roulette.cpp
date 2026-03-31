@@ -54,7 +54,7 @@ bool Roulette::useSkill(Player& p, Monster& m)
 
 
         std::cout << "\n" << name << "을 사용합니다 " << std::endl;
-        std::cout << "MP: " << p.GetMP() + mpConsume << "→" << p.GetMP() << std::endl;
+        std::cout << "MP: " << p.GetMP() + mpConsume << " → " << p.GetMP() << std::endl;
 
         return true;
     }

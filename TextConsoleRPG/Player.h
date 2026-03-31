@@ -46,7 +46,7 @@ public:
 
     void TakeDamage(int takeDamage);
 
-    void Levelup();
+    bool Levelup();
     void PrintStatus();
     bool IsAlive() const;
    

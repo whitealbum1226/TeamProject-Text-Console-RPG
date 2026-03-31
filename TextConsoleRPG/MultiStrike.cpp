@@ -14,7 +14,7 @@ bool MultiStrike::useSkill(Player& p, Monster& m)
         int attackCount = (rand() % 3) + 2; // 2 ~ 4번 랜덤 공격
 
         std::cout << "\n" << name << "을 사용합니다 " << std::endl;
-        std::cout << "MP: " << p.GetMP() + mpConsume << "→" << p.GetMP() << std::endl;
+        std::cout << "MP: " << p.GetMP() + mpConsume << " → " << p.GetMP() << std::endl;
 
         for (int i = 1; i <= attackCount; i++)
         {

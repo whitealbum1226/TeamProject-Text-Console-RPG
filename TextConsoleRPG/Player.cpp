@@ -92,12 +92,13 @@ bool Player::IsAlive() const { //살았는지 판단, 살았으면 True
     return hp_ > 0;
 }
 
-void Player::Levelup() { // 레벨업
+bool Player::Levelup() { // 레벨업
+    bool isLeveledUp = false;
     while (exp_ >= maxExp_) { // 남은 경험치가 다음 최대 경험치를 넘으면 레벨업 반복
         if (level_ >= maxLevel_) {
             std::cout << "레벨이 최대입니다!" << std::endl;
             exp_ = 0;
-            return;
+            return isLeveledUp;
         }
         level_ += 1;
         exp_ -= maxExp_; // maxExp를 초과할경우 현재 exp로 남은 값 넣어줌
@@ -144,8 +145,8 @@ void Player::Levelup() { // 레벨업
             learnSkill(new Roulette());
             std::cout << "\n신규 스킬(운명의 룰렛)을 획득했습니다" << std::endl;
         }
-
     }
+    return isLeveledUp;
 }
 
 void Player::PrintStatus() {

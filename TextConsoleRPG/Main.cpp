@@ -74,7 +74,7 @@ int main()
 
         case 2:
         {
-            BattleSystem battle(&player, nullptr);
+            BattleSystem battle(&player, nullptr, &log, &inventory);
             battle.BattleStart();
 
             std::string dummy;

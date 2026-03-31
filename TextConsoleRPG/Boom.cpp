@@ -14,7 +14,7 @@ bool Boom::useSkill(Player& p, Monster& m)
         m.TakeDamage(damage);
 
         std::cout << "\n" << name << "을 사용합니다 " << std::endl;
-        std::cout << "MP: " << p.GetMP() + mpConsume << "→" << p.GetMP() << std::endl;
+        std::cout << "MP: " << p.GetMP() + mpConsume << " → " << p.GetMP() << std::endl;
 
         return true;
     }

@@ -3,6 +3,8 @@
 #include "Monster/Monster.h"
 #include "Monster/Slime.h"
 #include "Monster/Goblin.h"
+#include "Inventory.h"
+#include "GameLog.h"
 #include "Skill.h"
 #include "Slash.h"
 #include "Boom.h"
@@ -15,54 +17,138 @@
 #include <ctime>
 #include <cstdlib>
 
-BattleSystem::BattleSystem(Player* p, Monster* m) : player(p), monster(m) {}
+BattleSystem::BattleSystem(Player* p, Monster* m, GameLog* lg, Inventory* inv)
+    : player(p), monster(m), logSystem(lg), inventory(inv), blood(nullptr), turn(1) {
+}
 
 void BattleSystem::BattleReady()
 {
     if (monster != nullptr)
     {
-        std::cout << monster->GetName() << "이 나타났습니다!" << std::endl;
+        logSystem->AddLog(monster->GetName() + "이(가) 나타났습니다!");
     }
 }
+bool BattleSystem::ExecuteSkill(Skill* selectedSkill)
+{
+    if (player->GetMP() >= selectedSkill->getMpConsume())
+    {
+        logSystem->ClearScreen();
+        logSystem->AddLog(player->GetName() + "의 기술: [" + selectedSkill->getName() + "]!");
+        int oldHP = monster->GetHP();
 
-void BattleSystem::NextTurn()
+        if (selectedSkill->useSkill(*player, *monster))
+        {
+            std::string sName = selectedSkill->getName();
+            if (sName == "슬래시") logSystem->DrawSkillSlash();
+            else if (sName == "신속") logSystem->DrawSkillQuick();
+            else if (sName == "회복") logSystem->DrawSkillHeal();
+            else if (sName == "출혈") logSystem->DrawSkillBlood();
+            else if (sName == "폭발") logSystem->DrawSkillBoom();
+            else if (sName == "마나 익스플로전") logSystem->DrawSkillManaBurn();
+            else if (sName == "운명의 룰렛") logSystem->DrawSkillRoulette();
+            else if (sName == "연속 공격") logSystem->DrawSkillMultiStrike();
+
+            std::cout << "\n[ ENTER 키를 눌러 결과를 확인하세요 ]";
+            std::cin.ignore(1000, '\n');
+            std::cin.get();
+
+            int damageDealt = oldHP - monster->GetHP();
+            if (damageDealt > 0) {
+                logSystem->AddLog(monster->GetName() + "에게 " + std::to_string(damageDealt) + "의 피해!");
+            }
+            player->UseMp(selectedSkill->getMpConsume());
+
+            logSystem->DrawBattleScreen(*player, *monster);
+            std::cout << "\n(엔터를 누르면 전투가 진행됩니다...)";
+            std::cin.ignore(1000, '\n');
+            std::cin.get();
+            return true;
+        }
+    }
+    else
+    {
+        logSystem->AddLog("마나가 부족합니다!");
+        std::cout << "현재 MP가 부족하여 기술을 쓸 수 없습니다." << std::endl;
+        std::cin.ignore(1000, '\n');
+        std::cin.get();
+    }
+    return false;
+}
+
+
+bool BattleSystem::NextTurn()
 {
     int choice;
     while (true)
     {
-        std::cout << "\n1. 공격 / 2. 인벤토리 / 3. 스킬 / " << std::endl;
+        logSystem->DrawBattleScreen(*player, *monster);
         std::cout << "선택: ";
         std::cin >> choice;
 
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(256, '\n');
+            continue;
+        }
+
+
+
         switch (choice)
         {
-        case 1:
-            return;
-        case 2:
-            // 인벤토리 화면
-            continue;
-            // BattleSystem.cpp 내 NextTurn 함수 중 일부 수정
-        case 3:
+        case 1: //  일반 공격 
+            return true;
+
+        case 2: // 아이템 사용
+        {
+            logSystem->DrawInventoryScreen(*inventory);
+
+            int itemChoice;
+            std::cout << "사용할 아이템 번호 (0.취소): ";
+            std::cin >> itemChoice;
+
+            if (itemChoice <= 0) continue;
+
+            InventoryItemData itemData = inventory->GetItem(itemChoice - 1);
+
+            if (itemData.name == "") {
+                std::cout << "해당 칸에 아이템이 없습니다!" << std::endl;
+                continue;
+            }
+
+            inventory->UseItem(itemChoice - 1, *player);
+            logSystem->AddLog(player->GetName() + "이(가) [" + itemData.name + "]을(를) 사용했습니다.");
+
+            std::cout << "\n(엔터를 누르면 계속합니다...)";
+            std::cin.ignore(1000, '\n');
+            std::cin.get();
+
+            return false;
+        }
+
+        case 3: // 스킬 메뉴 
         {
             auto& skills = player->getSkillList();
-            if (skills.empty()) {
+            if (skills.empty())
+            {
                 std::cout << "배운 스킬이 없습니다!" << std::endl;
                 continue;
             }
 
-            while (true) {
+            bool skillUsed = false; // 스킬 사용 여부 체크
+            while (true)
+            {
                 std::cout << "\n[ 스킬 메뉴 ]" << std::endl;
                 std::cout << "1. 스킬 사용 / 2. 스킬 상세 설명 / 0. 뒤로 가기" << std::endl;
                 std::cout << "선택: ";
                 int skillMenu;
                 std::cin >> skillMenu;
 
-                if (skillMenu == 0) break; // 스킬 메뉴 탈출 -> 1.공격/2.인벤토리 메뉴로
+                if (skillMenu == 0) break; // 스킬 메뉴 나가기 
 
-                if (skillMenu == 1) { // 스킬 사용 
+                if (skillMenu == 1)
+                { 
                     std::cout << "\n[ 사용 가능한 스킬 ]" << std::endl;
-                    for (int i = 0; i < (int)skills.size(); ++i)
-                    {
+                    for (int i = 0; i < (int)skills.size(); ++i) {
                         std::cout << i + 1 << ". " << skills[i]->getName() << " (MP: " << skills[i]->getMpConsume() << ")" << std::endl;
                     }
 
@@ -72,54 +158,39 @@ void BattleSystem::NextTurn()
 
                     if (useChoice <= 0 || useChoice > (int)skills.size()) continue;
 
-                    Skill* selectedSkill = skills[useChoice - 1];
-
-                    if (player->GetMP() >= selectedSkill->getMpConsume())
+                    if (ExecuteSkill(skills[useChoice - 1]))
                     {
-
-                        if (selectedSkill->useSkill(*player, *monster)) {
-                            player->UseMp(selectedSkill->getMpConsume());
-                            return;
-                        }
+                        return false; 
                     }
-                    else
-                    {
-                        std::cout << "마나가 부족합니다! (현재 MP: " << player->GetMP() << ")" << std::endl;
-                    }
-                    continue;
                 }
                 else if (skillMenu == 2)
-                {
-                    while (true)
+                { 
+                    std::cout << "\n========== [ 스킬 도감 ] ==========" << std::endl;
+                    for (int i = 0; i < (int)skills.size(); ++i) {
+                        std::cout << i + 1 << ". " << skills[i]->getName() << std::endl;
+                    }
+                    std::cout << "0. 돌아가기\n선택: ";
+
+                    int dictChoice;
+                    std::cin >> dictChoice;
+                    if (dictChoice > 0 && dictChoice <= (int)skills.size())
                     {
-                        std::cout << "\n========================================" << std::endl;
-                        std::cout << "            [   스킬 도감   ]          " << std::endl;
-                        std::cout << "========================================" << std::endl;
+                        logSystem->DrawSkillDetail(skills[dictChoice - 1]);
 
-                        for (int i = 0; i < (int)skills.size(); ++i) {
-                            std::cout << i + 1 << ". " << skills[i]->getName() << std::endl;
-                        }
-                        std::cout << "0. 돌아가기" << std::endl;
-                        std::cout << "선택: ";
-
-                        int dictChoice;
-                        std::cin >> dictChoice;
-
-                        if (dictChoice == 0) break; // 스킬 메뉴(사용/설명)로 이동
-
-                        if (dictChoice > 0 && dictChoice <= (int)skills.size()) {
-                            // 네가 Skill.h에 만든 ShowDetail() 호출
-                            skills[dictChoice - 1]->ShowDetail();
-                        }
-                        else
-                        {
-                            std::cout << "잘못된 번호입니다." << std::endl;
+                        int detailChoice;
+                        std::cin >> detailChoice;
+                        if (detailChoice == 1) {
+                            if (ExecuteSkill(skills[dictChoice - 1]))
+                            {
+                                return false; // 스킬 사용 성공 시 NextTurn 종료
+                            }
                         }
                     }
                 }
             }
-            continue;
+            continue; 
         }
+
         default:
             std::cout << "잘못된 입력입니다." << std::endl;
             continue;
@@ -129,134 +200,148 @@ void BattleSystem::NextTurn()
 
 void BattleSystem::PlayerWin()
 {
-    int ShopSelect;
-    int GoldRandom = (rand() % 11) + 20; // 20~30 골드 랜덤
+    int GoldRandom = (rand() % 11) + 20;
 
-    player->gainExp(50); // 경험치 50 증가
+    logSystem->RecordMonsterKill(monster->GetName());
+    logSystem->AddLog(monster->GetName() + "을(를) 처치했습니다!");
+
+    logSystem->DrawExpGoldGain(50, GoldRandom);
+
+    player->gainExp(50);
     player->gainGold(GoldRandom);
-    player->Levelup();
+    if (player->Levelup()) {
+        logSystem->AddLog("★ LEVEL UP! ★");
+    }
 
-    std::cout << "\n축하합니다! 전투에서 승리했습니다." << std::endl;
-    std::cout << "얻은 경험치: 50 | 얻은 골드: " << GoldRandom << std::endl;
-    std::cout << "상점에 진입 하시겠습니까. (예.1)";
+    std::cout << "\n상점에 진입 하시겠습니까? (1.예 / 0.아니오): ";
+    int ShopSelect;
     std::cin >> ShopSelect;
-
-        if (ShopSelect == 1)
-        {
-            // 상점 함수 구현
-        }
-        else
-        {
-            std::cout << "다시 모험을 떠납니다." << std::endl;
-        }
-
+    if (ShopSelect == 1) logSystem->DrawShopUI();
 }
 
 void BattleSystem::PlayerAttack()
 {
-    std::cout << "\n" << player->GetName() << "의 " << turn << "번째 턴" << std::endl;
-    monster->TakeDamage(player->GetAttack());
+    int damage = player->GetAttack();
+    monster->TakeDamage(damage);
 
-    std::cout << player->GetAttack() << "를 입힙니다" << std::endl;
-    std::cout << monster->GetName() << "의 HP : " << monster->GetHP() << std::endl;
-}
+    logSystem->DrawAttackPunch();
 
-void BattleSystem::MonsterAttack() {
-    std::cout << "\n" << monster->GetName() << "의 " << turn << "번째 턴" << std::endl;
-    player->TakeDamage(monster->GetAttack());
-    if (blood != nullptr && blood->GetBloodCount() > 0) // 출혈 스킬이 있고 카운트가 0보다 클 경우
+    std::cout << "\n[ ENTER 키를 눌러 결과를 확인하세요 ]";
+    std::cin.get();
+
+    std::string battleMsg = "[" + std::to_string(turn) + "턴] " + player->GetName() + "의 공격! "
+        + monster->GetName() + "에게 " + std::to_string(damage) + "의 피해! "
+        + "(남은 HP: " + std::to_string(monster->GetHP()) + ")";
+    logSystem->AddLog(battleMsg);
+
+    if (monster->GetHP() <= 0)
     {
-        monster->TakeDamage(blood->GetBloodDamage());
-        blood->SetBloodCount(blood->GetBloodCount() - 1);
+        logSystem->AddLog(monster->GetName() + "이(가) 쓰러졌습니다!");
     }
 
-    std::cout << monster->GetAttack() << "만큼의 데미지를 입었습니다" << std::endl;
-    std::cout << "플레이어의 HP: " << player->GetHP() << std::endl;
+    logSystem->DrawBattleScreen(*player, *monster);
+
+    std::cout << "\n(엔터를 누르면 계속됩니다...)";
+    std::cin.get();
 }
+
+void BattleSystem::MonsterAttack()
+{
+    int mDamage = monster->GetAttack();
+    player->TakeDamage(mDamage);
+
+    if (blood != nullptr && blood->GetBloodCount() > 0)
+    {
+        int bDamage = blood->GetBloodDamage();
+        monster->TakeDamage(bDamage);
+        blood->SetBloodCount(blood->GetBloodCount() - 1);
+        logSystem->AddLog( monster->GetName() + "이(가) 출혈로 " + std::to_string(bDamage) + "의 피해!");
+    }
+
+    logSystem->AddLog(monster->GetName() + "의 공격! " + std::to_string(mDamage) + "의 피해.");
+
+    logSystem->DrawBattleScreen(*player, *monster);
+
+    std::cout << "\n(엔터를 누르면 계속됩니다...)";
+    std::cin.ignore(1000, '\n');
+    std::cin.get();
+}
+
 void BattleSystem::BattleStart()
 {
-    this->turn = 1; // 전투 시작 시 턴 1로 설정
-    int MonsterRandom = rand() % 100; // 몬스터 출현 확률 0~99 난수
+    this->turn = 1;
+    int MonsterRandom = rand() % 100;
 
-    this->blood = nullptr; // 지속 피해
+    this->blood = nullptr;
     auto& skills = player->getSkillList();
-    for (int i = 0; i < (int)skills.size(); ++i) // 출혈 스킬을 배웠을 경우 포인터에 스킬을 넣음
+    for (int i = 0; i < (int)skills.size(); ++i)
     {
         if (skills[i]->getName() == "출혈")
         {
             blood = (Blood*)skills[i];
-            break; 
+            break;
         }
     }
 
-    if (MonsterRandom < 50) // 임시로 50%로 구현 이후 특정 조건에 새로운 몬스터 출현하도록 구현
-    {
-        monster = new Slime(5); // 임시로 레벨 넣었습니다
-    }
-    else if (MonsterRandom < 100)
-    {
-        monster = new Goblin(8);
-    }
+    if (MonsterRandom < 50) monster = new Slime(5);
+    else monster = new Goblin(8);
 
-    BattleReady(); // 몬스터 생성 후 정보 출력
+    logSystem->ClearScreen();
+    BattleReady();
 
     while (player->GetHP() > 0 && monster->GetHP() > 0)
     {
-        NextTurn();
+        bool isNormalAttack = NextTurn();
 
-        int AttackRandom = rand() % 100; // 플레이어 몬스터 공격 순서 랜덤 (이후 특정 조건으로 확률 변경 가능)
+        int AttackRandom = rand() % 100;
 
-        if (AttackRandom < 50 || player->GetQuickAttack() == true) // 플레이어 선공 (신속 스킬 사용 시 선공 구현)
+        // 플레이어 선공 (확률 50% 또는 신속 스킬 사용 시)
+        if (AttackRandom < 50 || player->GetQuickAttack() == true)
         {
             player->SetQuickAttack(false);
-            std::cout << player->GetName() << "의 선공."  << std::endl;
-            PlayerAttack();
-            if (monster->GetHP() <= 0)
+
+            if (isNormalAttack)
             {
-                std::cout << monster->GetName() << "을(를) 처치했습니다." << std::endl;
-                PlayerWin();
-                break; // 공격 대상의 체력이 0이면 반복문 탈출
+                PlayerAttack();
             }
 
-            MonsterAttack();
-            if (player->GetHP() <= 0)
+            if (monster->GetHP() <= 0)
             {
-                std::cout << "\n" << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
+                PlayerWin();
                 break;
             }
+
+            MonsterAttack(); 
         }
-        else // 몬스터 선공
+        else  // 몬스터 선공
         {
-            std::cout << monster->GetName() << "의 선공." << std::endl;
-
             MonsterAttack();
+
             if (player->GetHP() <= 0)
             {
-                std::cout << "\n" << player->GetName() << "이(가) 전투에서 패배합니다." << std::endl;
-                break;
-            }
-            if (monster->GetHP() <= 0) // 몬스터가 출혈로 죽었을 경우를 대비
-            {
-                std::cout << "\n" << monster->GetName() << "을(를) 처치했습니다." << std::endl;
-                PlayerWin();
+                logSystem->AddLog(player->GetName() + "이(가) 패배했습니다...");
                 break;
             }
 
-            PlayerAttack();
+            if (isNormalAttack)
+            {
+                PlayerAttack();
+            }
+
             if (monster->GetHP() <= 0)
             {
-                std::cout << "\n" << monster->GetName() << "을(를) 처치했습니다." << std::endl;
                 PlayerWin();
-                break; 
+                break;
             }
         }
-  
+
         turn++; // 턴 증가
     }
 
-    if (monster != nullptr) // 몬스터 누수 방지
+    if (monster != nullptr)
     {
         delete monster;
-        monster = nullptr; 
+        monster = nullptr;
     }
 }
+

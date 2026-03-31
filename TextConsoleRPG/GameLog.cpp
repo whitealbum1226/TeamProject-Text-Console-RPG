@@ -317,7 +317,7 @@ void GameLog::DrawBattleScreen(const Player& player, const Monster& monster) con
         std::cout << "  > " << eventLogs[i] << "\n";
     }
 
-    for (size_t i = 0; i < eventLogs.size(); ++i) std::cout << "   > " << eventLogs[i] << "\n";
+   //  for (size_t i = 0; i < eventLogs.size(); ++i) std::cout << "   > " << eventLogs[i] << "\n";
     std::cout << "  +======================================================+\n";
 
     std::cout << R"(
