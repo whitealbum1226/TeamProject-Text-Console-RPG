@@ -60,7 +60,6 @@ bool BattleSystem::ExecuteSkill(Skill* selectedSkill)
 
             logSystem->DrawBattleScreen(*player, *monster);
             std::cout << "\n(엔터를 누르면 전투가 진행됩니다...)";
-            std::cin.ignore(1000, '\n');
             std::cin.get();
             return true;
         }
@@ -83,22 +82,19 @@ bool BattleSystem::NextTurn()
     {
         logSystem->DrawBattleScreen(*player, *monster);
         std::cout << "선택: ";
-        std::cin >> choice;
-
-        if (std::cin.fail()) {
+        if (!(std::cin >> choice))
+        { 
             std::cin.clear();
-            std::cin.ignore(256, '\n');
+            std::cin.ignore(1000, '\n');
             continue;
         }
-
-
 
         switch (choice)
         {
         case 1: //  일반 공격 
             return true;
 
-        case 2: // 아이템 사용
+        case 2: // 인벤토리
         {
             logSystem->DrawInventoryScreen(*inventory);
 
@@ -224,24 +220,21 @@ void BattleSystem::PlayerAttack()
     int damage = player->GetAttack();
     monster->TakeDamage(damage);
 
+    logSystem->ClearScreen();
     logSystem->DrawAttackPunch();
 
-    std::cout << "\n[ ENTER 키를 눌러 결과를 확인하세요 ]";
+    std::cout << "\n[ ENTER: 결과 확인 ]";
     std::cin.get();
 
     std::string battleMsg = "[" + std::to_string(turn) + "턴] " + player->GetName() + "의 공격! "
-        + monster->GetName() + "에게 " + std::to_string(damage) + "의 피해! "
-        + "(남은 HP: " + std::to_string(monster->GetHP()) + ")";
+        + monster->GetName() + "에게 " + std::to_string(damage) + "의 피해!";
     logSystem->AddLog(battleMsg);
 
-    if (monster->GetHP() <= 0)
-    {
-        logSystem->AddLog(monster->GetName() + "이(가) 쓰러졌습니다!");
-    }
+    if (monster->GetHP() <= 0) logSystem->AddLog(monster->GetName() + "이(가) 쓰러졌습니다!");
 
     logSystem->DrawBattleScreen(*player, *monster);
 
-    std::cout << "\n(엔터를 누르면 계속됩니다...)";
+    std::cout << "\n(엔터를 누르면 전투가 진행됩니다...)";
     std::cin.get();
 }
 
@@ -263,7 +256,6 @@ void BattleSystem::MonsterAttack()
     logSystem->DrawBattleScreen(*player, *monster);
 
     std::cout << "\n(엔터를 누르면 계속됩니다...)";
-    std::cin.ignore(1000, '\n');
     std::cin.get();
 }
 
@@ -292,50 +284,59 @@ void BattleSystem::BattleStart()
     while (player->GetHP() > 0 && monster->GetHP() > 0)
     {
         bool isNormalAttack = NextTurn();
-
         int AttackRandom = rand() % 100;
 
-        // 플레이어 선공 (확률 50% 또는 신속 스킬 사용 시)
-        if (AttackRandom < 50 || player->GetQuickAttack() == true)
+        // 플레이어 신속 스킬 써을 경우
+        if (player->GetQuickAttack() == true)
         {
+            // 신속 플래그 초기화
             player->SetQuickAttack(false);
 
-            if (isNormalAttack)
-            {
-                PlayerAttack();
-            }
+            // 스킬 사용 직후 '즉시' 공격 실행
+            PlayerAttack();
 
-            if (monster->GetHP() <= 0)
-            {
+            if (monster->GetHP() <= 0) {
                 PlayerWin();
                 break;
             }
 
-            MonsterAttack(); 
-        }
-        else  // 몬스터 선공
-        {
             MonsterAttack();
+        }
+        else // 신속 사용하지 않은 일반적인 공격 처리
+        {
+            int AttackRandom = rand() % 100;
 
-            if (player->GetHP() <= 0)
+            // 플레이어 선공 (확률 50%)
+            if (AttackRandom < 50)
             {
-                logSystem->AddLog(player->GetName() + "이(가) 패배했습니다...");
-                break;
+                if (isNormalAttack) PlayerAttack();
+
+                if (monster->GetHP() <= 0) {
+                    PlayerWin();
+                    break;
+                }
+                MonsterAttack();
             }
-
-            if (isNormalAttack)
+            // 몬스터 선공
+            else
             {
-                PlayerAttack();
-            }
+                MonsterAttack();
 
-            if (monster->GetHP() <= 0)
-            {
-                PlayerWin();
-                break;
+                if (player->GetHP() <= 0) {
+                    logSystem->AddLog(player->GetName() + "이(가) 패배했습니다...");
+                    break;
+                }
+
+                if (isNormalAttack) PlayerAttack();
+
+                if (monster->GetHP() <= 0) {
+                    PlayerWin();
+                    break;
+                }
             }
         }
 
-        turn++; // 턴 증가
+        turn++; //  턴 증가
     }
 
     if (monster != nullptr)
