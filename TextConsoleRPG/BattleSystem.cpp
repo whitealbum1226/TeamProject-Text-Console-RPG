@@ -157,7 +157,7 @@ void BattleSystem::PlayerAttack()
     std::cout << player->GetName() << "의 " << turn << "번째 턴" << std::endl;
     monster->TakeDamage(player->GetAttack());
 
-    std::cout << "현재 플레이어의 HP: " << monster->GetHP() << std::endl;
+    std::cout << "\n" << monster->GetName() << "의 HP : " << monster->GetHP() << std::endl;
 }
 
 void BattleSystem::MonsterAttack() {
@@ -169,7 +169,7 @@ void BattleSystem::MonsterAttack() {
         blood->SetBloodCount(blood->GetBloodCount() - 1);
     }
 
-    std::cout << "현재 플레이어의 HP: " << player->GetHP() << std::endl;
+    std::cout << "\n플레이어의 HP: " << player->GetHP() << std::endl;
 }
 void BattleSystem::BattleStart()
 {
