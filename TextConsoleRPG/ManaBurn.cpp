@@ -13,7 +13,8 @@ bool ManaBurn::useSkill(Player& p, Monster& m)
          
         p.UseMp(CurruntMp); // 현재 마나 전체 소모
         m.TakeDamage(damage);
-        std::cout << name << "을 사용합니다 " << std::endl;
+        std::cout << "\n" << name << "을 사용합니다 " << std::endl;
+        std::cout << "MP: " << CurruntMp << "→" << "0" << std::endl;
 
         return true;
     }
