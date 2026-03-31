@@ -91,7 +91,8 @@ bool BattleSystem::NextTurn()
 
         switch (choice)
         {
-        case 1: //  일반 공격 
+        case 1: //  일반 공격
+            std::cin.ignore(1000, '\n');
             return true;
 
         case 2: // 인벤토리
@@ -226,7 +227,7 @@ void BattleSystem::PlayerAttack()
     std::cout << "\n[ ENTER: 결과 확인 ]";
     std::cin.get();
 
-    std::string battleMsg = "[" + std::to_string(turn) + "턴] " + player->GetName() + "의 공격! "
+    std::string battleMsg = player->GetName() + "의 공격! "
         + monster->GetName() + "에게 " + std::to_string(damage) + "의 피해!";
     logSystem->AddLog(battleMsg);
 
@@ -234,7 +235,7 @@ void BattleSystem::PlayerAttack()
 
     logSystem->DrawBattleScreen(*player, *monster);
 
-    std::cout << "\n(엔터를 누르면 전투가 진행됩니다...)";
+    std::cout << "\n"<< player->GetName() << "의 공격이 성공했습니다. (ENTER)";
     std::cin.get();
 }
 
@@ -255,7 +256,7 @@ void BattleSystem::MonsterAttack()
 
     logSystem->DrawBattleScreen(*player, *monster);
 
-    std::cout << "\n(엔터를 누르면 계속됩니다...)";
+    std::cout << "\n" << monster->GetName()  << "이 " << player->GetName() << "을 공격했습니다 (ENTER)";
     std::cin.get();
 }
 
@@ -283,6 +284,8 @@ void BattleSystem::BattleStart()
 
     while (player->GetHP() > 0 && monster->GetHP() > 0)
     {
+        logSystem->AddLog("[" + std::to_string(turn) + "번째 턴]");
+
         bool isNormalAttack = NextTurn();
         int AttackRandom = rand() % 100;
 
@@ -304,8 +307,6 @@ void BattleSystem::BattleStart()
         }
         else // 신속 사용하지 않은 일반적인 공격 처리
         {
-            int AttackRandom = rand() % 100;
-
             // 플레이어 선공 (확률 50%)
             if (AttackRandom < 50)
             {
