@@ -28,7 +28,7 @@ private:
     void Close();
 
     void ClearScreen() const;
-    void PrintBorder() const;
+    void PrintLine() const;
     void PrintMainString(const std::string& title) const;
     void PrintPlayerInfo(const Player& player) const;
 

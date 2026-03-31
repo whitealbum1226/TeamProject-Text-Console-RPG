@@ -141,7 +141,6 @@
     <ClCompile Include="MultiStrike.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="QuickAttack.cpp" />
-    <ClCompile Include="RewardSystem.cpp" />
     <ClCompile Include="Roulette.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Slash.cpp" />
@@ -166,7 +165,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="QuickAttack.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="RewardSystem.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="Slash.h" />
     <ClInclude Include="Store.h" />

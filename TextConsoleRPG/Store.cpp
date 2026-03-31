@@ -39,7 +39,7 @@ void Store::ClearScreen() const
 }
 
 // 절취선을 각각 구현하기보다 하나로 불러서 쓰기 편하게 함수처리
-void Store::PrintBorder() const
+void Store::PrintLine() const
 {
     std::cout << "==================================================\n";
 }
@@ -47,9 +47,9 @@ void Store::PrintBorder() const
 // 각각 입력 안해도 이거 하나 가져다 쓰면 머릿말 사용가능
 void Store::PrintMainString(const std::string& MainString) const
 {
-    PrintBorder();
+    PrintLine();
     std::cout << "                  [ " << MainString << " ]\n";
-    PrintBorder();
+    PrintLine();
 }
 
 void Store::PrintPlayerInfo(const Player& player) const
@@ -59,7 +59,7 @@ void Store::PrintPlayerInfo(const Player& player) const
     std::cout << "HP    : " << player.GetHP() << " / " << player.GetMaxHP() << '\n';
     std::cout << "MP    : " << player.GetMP() << " / " << player.GetMaxMP() << '\n';
     std::cout << "골드  : " << player.GetGold() << " G\n";
-    PrintBorder();
+    PrintLine();
 }
 
 // 혹시나 재사용 가능성 있어서 함수 삭제는 안함
@@ -75,7 +75,7 @@ void Store::PrintMainMenu(const Player& player) const
     std::cout << "3. 인벤토리 확인\n";
     std::cout << "0. 상점 나가기\n";
 
-    PrintBorder();
+    PrintLine();
     std::cout << "선택 : ";
 }
 
@@ -93,9 +93,9 @@ void Store::PrintBuyMenu(const Player& player) const
             << std::right << shopItems_[i].price << " G\n";
     }
 
-    PrintBorder();
+    PrintLine();
     std::cout << "0. 뒤로가기\n";
-    PrintBorder();
+    PrintLine();
     std::cout << "구매할 번호 : ";
 }
 
@@ -119,15 +119,16 @@ void Store::PrintSellMenu(const Player& player, Inventory& inventory) const
             int sellPrice = item.price * 60 / 100;
 
            // 정렬 사용을 위해 작성
+           // 내 머릿속에서 나온거 x 참고자료 보고 만듬
             std::cout << std::setw(2) << i + 1 << ". "
                 << std::left << std::setw(18) << item.name
                 << std::right << sellPrice << " G\n";
         }
     }
 
-    PrintBorder();
+    PrintLine();
     std::cout << "0. 뒤로가기\n";
-    PrintBorder();
+    PrintLine();
     std::cout << "판매할 번호 : ";
 }
 
@@ -167,7 +168,7 @@ void Store::Open(Player& player, Inventory& inventory)
             ClearScreen();
             PrintMainString("상점 종료");
             std::cout << "상점을 나갑니다.\n";
-            PrintBorder();
+            PrintLine();
             Close();
             break;
 
@@ -175,7 +176,7 @@ void Store::Open(Player& player, Inventory& inventory)
             ClearScreen();
             PrintMainString("알림");
             std::cout << "잘못된 입력입니다.\n";
-            PrintBorder();
+            PrintLine();
 
        
             break;
@@ -210,7 +211,7 @@ void Store::BuyItem(Player& player, Inventory& inventory)
             ClearScreen();
             PrintMainString("알림");
             std::cout << "존재하지 않는 상품입니다.\n";
-            PrintBorder();
+            PrintLine();
 
             continue;
         }
@@ -224,7 +225,7 @@ void Store::BuyItem(Player& player, Inventory& inventory)
             std::cout << "골드가 부족합니다.\n";
             std::cout << item.name << " 구매에 필요한 골드 : " << item.price << " G\n";
             std::cout << "현재 보유 골드 : " << player.GetGold() << " G\n";
-            PrintBorder();
+            PrintLine();
 
        
             continue;
@@ -239,7 +240,7 @@ void Store::BuyItem(Player& player, Inventory& inventory)
         std::cout << item.name << "을(를) 구매했습니다.\n";
         std::cout << "소모 골드 : " << item.price << " G\n";
         std::cout << "남은 골드 : " << player.GetGold() << " G\n";
-        PrintBorder();
+        PrintLine();
 
      
         return;
@@ -256,7 +257,7 @@ void Store::SellItem(Player& player, Inventory& inventory)
             ClearScreen();
             PrintMainString("판매 불가");
             std::cout << "판매할 아이템이 없습니다.\n";
-            PrintBorder();
+            PrintLine();
 
       
             return;
@@ -284,7 +285,7 @@ void Store::SellItem(Player& player, Inventory& inventory)
             ClearScreen();
             PrintMainString("알림");
             std::cout << "존재하지 않는 아이템입니다.\n";
-            PrintBorder();
+            PrintLine();
 
       
             continue;
@@ -305,7 +306,7 @@ void Store::SellItem(Player& player, Inventory& inventory)
         std::cout << item.name << "을(를) 판매했습니다.\n";
         std::cout << "획득 골드 : " << sellPrice << " G\n";
         std::cout << "현재 골드 : " << player.GetGold() << " G\n";
-        PrintBorder();
+        PrintLine();
 
       
         return;

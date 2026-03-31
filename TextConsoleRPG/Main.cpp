@@ -10,6 +10,13 @@
 #include "BattleSystem.h"
 #include "GameLog.h"
 
+// 중복된 입력을 함수로!
+void Next()
+{
+    std::cin.ignore(20, '\n');
+    std::cin.get();
+}
+
 int main()
 {
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
@@ -66,9 +73,8 @@ int main()
         {
             log.DrawPlayerStatScreen(player);
 
-            std::string dummy;
-            std::cout << "\n돌아가려면 아무 글자나 입력 >> ";
-            std::cin >> dummy;
+            std::cout << "\n엔터키를 눌러주세요! >> ";
+            Next();
             break;
         }
 
@@ -77,9 +83,8 @@ int main()
             BattleSystem battle(&player, nullptr, &log, &inventory);
             battle.BattleStart();
 
-            std::string dummy;
-            std::cout << "\n메인 메뉴로 돌아가려면 아무 글자나 입력 >> ";
-            std::cin >> dummy;
+            std::cout << "\n엔터키를 눌러주세요! >> ";
+            Next();
             break;
         }
 
@@ -93,8 +98,7 @@ int main()
         {
             log.DrawInventoryScreen(inventory);
 
-            int temp;
-            std::cin >> temp;
+            Next();
             break;
         }
 
@@ -104,19 +108,18 @@ int main()
             {
                 std::cout << "인벤토리가 비어 있습니다.\n";
 
-                std::string dummy;
-                std::cout << "돌아가려면 아무 글자나 입력 >> ";
-                std::cin >> dummy;
+                std::cout << "엔터키를 눌러주세요! >> ";
+                std::cin.ignore(20, '\n');
+                std::cin.get();
                 break;
             }
 
             if (!inventory.HasUsableItem())
             {
                 std::cout << "사용할 수 있는 포션이 없습니다.\n";
-
-                std::string dummy;
-                std::cout << "돌아가려면 아무 글자나 입력 >> ";
-                std::cin >> dummy;
+                
+                std::cout << "엔터키를 눌러주세요! >> ";
+                Next();
                 break;
             }
 
@@ -140,9 +143,8 @@ int main()
 
             inventory.UseItem(itemChoice - 1, player);
 
-            std::string dummy;
-            std::cout << "\n돌아가려면 아무 글자나 입력 >> ";
-            std::cin >> dummy;
+            std::cout << "\n엔터키를 눌러주세요! >> ";
+            Next();
             break;
         }
 
@@ -151,9 +153,8 @@ int main()
             log.ClearScreen();
             log.DrawKillSummary();
 
-            std::string dummy;
-            std::cout << "\n돌아가려면 아무 글자나 입력 >> ";
-            std::cin >> dummy;
+            std::cout << "\n엔터키를 눌러주세요! >> ";
+            Next();
             break;
         }
 
