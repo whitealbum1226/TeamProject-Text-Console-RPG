@@ -605,3 +605,8 @@ void GameLog::DrawSkillDetail(Skill* skill) const {
     std::cout << "============================================================\n";
     std::cout << " 선택 >> ";
 }
+
+void GameLog::ClearLog()
+{
+    eventLogs.clear();
+}

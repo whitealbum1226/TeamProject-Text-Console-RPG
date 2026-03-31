@@ -84,4 +84,7 @@ public:
 
     //스킬 상세설명ui
     void DrawSkillDetail(Skill* skill) const;
+
+    //게임 재시작 시 로그 초기화
+    void ClearLog();
 };

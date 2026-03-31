@@ -280,6 +280,7 @@ void BattleSystem::BattleStart()
     else monster = new Goblin(8);
 
     logSystem->ClearScreen();
+    logSystem->ClearLog();
     BattleReady();
 
     while (player->GetHP() > 0 && monster->GetHP() > 0)
