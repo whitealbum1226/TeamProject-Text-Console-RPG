@@ -54,6 +54,7 @@ int main()
         std::cout << "5. 아이템 사용\n";
         std::cout << "6. 토벌 현황 확인\n";
         std::cout << "0. 게임 종료\n";
+        std::cout << "99. 시연용 치트키\n";
         std::cout << "선택 >> ";
 
         int menu;
@@ -162,6 +163,12 @@ int main()
         {
             std::cout << "게임을 종료합니다.\n";
             return 0;
+        }
+        case 99: // 시연용
+        {
+            player.Cheat();
+            Next(); // 엔터 대기
+            break;
         }
 
         default:

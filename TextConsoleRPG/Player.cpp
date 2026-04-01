@@ -167,6 +167,38 @@ void Player::TakeDamage(int takeDamage) {
         hp_ = 0;
     }
 }
+void Player::Cheat() // 시연용
+{
+    level_ = 10;
+    maxLevel_ = 10;
+    maxHp_ = 9999;
+    hp_ = 9999;
+    maxMp_ = 9999;
+    mp_ = 9999;
+    attack_ = 999;
+    def_ = 500;
+    gold_ += 1000000;
+    exp_ = 0;
+
+
+    for (Skill* s : skillList) // 스킬 리스트 초기화 후 모든 스킬 습득
+    {
+        delete s;
+    }
+    skillList.clear();
+
+    learnSkill(new Slash());       
+    learnSkill(new HealSkill());     
+    learnSkill(new QuickAttack());   
+    learnSkill(new Blood());         
+    learnSkill(new Boom());          
+    learnSkill(new ManaBurn());      
+    learnSkill(new MultiStrike());   
+    learnSkill(new Roulette());      
+
+    std::cout << "모든 스킬 습득 및 능력치가 최대치로 조정되었습니다.\n" << std::endl;
+}
+
 
 Player::~Player()
 {

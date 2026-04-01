@@ -49,7 +49,8 @@ public:
     bool Levelup();
     void PrintStatus();
     bool IsAlive() const;
-   
+
+    void Cheat();
 private:
     std::string name_;
     std::string job_;
