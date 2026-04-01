@@ -7,6 +7,8 @@
 Orc::Orc(int playerLevel)
     : Monster("Orc", playerLevel)
 {
+    maxHp_ *= 1.5;
+
     hp_ *= 1.5;
     // 체력 증가 -> 전투 지속 시간 증가
     attack_ *= 1.3;

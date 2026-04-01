@@ -7,6 +7,8 @@
 Slime::Slime(int playerLevel)
     : Monster("Slime", playerLevel)
 {
+    maxHp_ *= 0.5;
+    // 특정 몬스터 hp출력시 최대 = hp랑 기초설계부터 다른걸 확인하여 추가했음
     hp_ *= 0.5;
     // 체력 감소 -> 빠른 처치 가능
     attack_ *= 0.7;
