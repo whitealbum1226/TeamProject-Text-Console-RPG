@@ -7,6 +7,8 @@
 Troll::Troll(int playerLevel)
     : Monster("Troll", playerLevel)
 {
+    maxHp_ *= 2;
+
     hp_ *= 2;
     // 기본 체력의 2배 -> 전투 지속 시간 증가
     defense_ *= 1.5;
