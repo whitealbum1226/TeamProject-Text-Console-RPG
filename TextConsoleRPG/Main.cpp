@@ -81,7 +81,7 @@ int main()
 
         case 2:
         {
-            BattleSystem battle(&player, nullptr, &log, &inventory);
+            BattleSystem battle(&player, nullptr, &log, &inventory, &store);
             battle.BattleStart();
 
             std::cout << "\n엔터키를 눌러주세요! >> ";

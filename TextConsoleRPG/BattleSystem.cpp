@@ -5,6 +5,7 @@
 #include "Monster/Goblin.h"
 #include "Inventory.h"
 #include "GameLog.h"
+#include "Store.h"
 #include "Skill.h"
 #include "Slash.h"
 #include "Boom.h"
@@ -17,8 +18,8 @@
 #include <ctime>
 #include <cstdlib>
 
-BattleSystem::BattleSystem(Player* p, Monster* m, GameLog* lg, Inventory* inv)
-    : player(p), monster(m), logSystem(lg), inventory(inv), blood(nullptr), turn(1) {
+BattleSystem::BattleSystem(Player* p, Monster* m, GameLog* lg, Inventory* inv, Store* s)
+    : player(p), monster(m), logSystem(lg), inventory(inv), store(s), blood(nullptr), turn(1) {
 }
 
 void BattleSystem::BattleReady()
@@ -213,7 +214,12 @@ void BattleSystem::PlayerWin()
     std::cout << "\n상점에 진입 하시겠습니까? (1.예 / 0.아니오): ";
     int ShopSelect;
     std::cin >> ShopSelect;
-    if (ShopSelect == 1) logSystem->DrawShopUI();
+    if (ShopSelect == 1)
+    {
+        if (store != nullptr) {
+            store->Open(*player, *inventory);
+        }
+    }
 }
 
 void BattleSystem::PlayerAttack()

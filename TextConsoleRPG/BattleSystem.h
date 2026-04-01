@@ -6,6 +6,7 @@ class Player;
 class Monster;
 class GameLog;
 class Inventory;
+class Store;
 class Blood;
 class Skill;
 
@@ -16,6 +17,7 @@ private:
     Monster* monster;
     GameLog* logSystem;
     Inventory* inventory;
+    Store* store;
     Blood* blood;
     int turn = 1;
     
@@ -23,7 +25,7 @@ private:
 
 
 public:
-    BattleSystem(Player* p, Monster* m, GameLog* lg, Inventory* inv);
+    BattleSystem(Player* p, Monster* m, GameLog* lg, Inventory* inv, Store* s);
 
     void BattleReady();
 
